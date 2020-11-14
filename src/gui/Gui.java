@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JFrame;
 
+import actions.KeyHandler;
+
 public class Gui {
 	
 	JFrame jf;
@@ -11,12 +13,13 @@ public class Gui {
 	public static int xoff = 130, yoff = 20;
 	
 	public void create() {
-		jf = new JFrame("Snakeology");
+		jf = new JFrame("Snakeology"); // Titel
 		jf.setSize(width, height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setLocationRelativeTo(null);
 		jf.setLayout(null);
 		jf.setResizable(false);
+		jf.addKeyListener(new KeyHandler());
 		
 		d = new Draw();
 		d.setBounds(0, 0, width, height);
