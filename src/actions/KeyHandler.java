@@ -16,8 +16,9 @@ public class KeyHandler implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) { // Bewegungen der Schlange
 		switch (e.getKeyCode()) {
+		// WASD-Tasten
 		case KeyEvent.VK_W: 
-			if(!(Snake.head.getDir() == Dir.DOWN) && !Snake.waitToMove) { // Verhindert Probleme durch schnelles Tastenhämmern (hoch-runter)
+			if(!(Snake.head.getDir() == Dir.DOWN) && !Snake.waitToMove) { // verhindert Probleme durch schnelles Tastenhämmern (hoch-runter)
 				Snake.head.setDir(Dir.UP);
 				Snake.waitToMove = true;
 			}
@@ -40,6 +41,27 @@ public class KeyHandler implements KeyListener{
 				Snake.waitToMove = true;
 			}
 			break;
+		// Pfeiltasten
+		case KeyEvent.VK_UP: 
+			if(!(Snake.head.getDir() == Dir.DOWN) && !Snake.waitToMove) { 
+				Snake.head.setDir(Dir.UP);
+				Snake.waitToMove = true;
+			}
+		case KeyEvent.VK_LEFT: 
+			if(!(Snake.head.getDir() == Dir.RIGHT) && !Snake.waitToMove) {
+				Snake.head.setDir(Dir.LEFT);
+				Snake.waitToMove = true;
+			}
+		case KeyEvent.VK_DOWN: 
+			if(!(Snake.head.getDir() == Dir.UP) && !Snake.waitToMove) { 
+				Snake.head.setDir(Dir.DOWN);
+				Snake.waitToMove = true;
+			}
+		case KeyEvent.VK_RIGHT: 
+			if(!(Snake.head.getDir() == Dir.LEFT) && !Snake.waitToMove) {
+				Snake.head.setDir(Dir.RIGHT);
+				Snake.waitToMove = true;
+			}
 		}
 	}
 
