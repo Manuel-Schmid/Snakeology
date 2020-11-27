@@ -1,7 +1,12 @@
 package clocks;
 
+import java.io.IOException;
+
+import javax.swing.JDialog;
+
 import actions.Collision;
 import game.Snake;
+import gui.DeathScreen;
 
 public class GameClock extends Thread{
 	public static boolean running = true;

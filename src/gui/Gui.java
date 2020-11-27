@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import actions.KeyHandler;
