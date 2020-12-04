@@ -23,7 +23,7 @@ public class DeathScreen extends JDialog {
 	private String pfad = "C:" + File.separator + "Users" + File.separator + "Many" + File.separator + "eclipse-workspace" + File.separator + "Snakeology" + File.separator + "data" + File.separator;
 	private String dateiname = "topUsers.txt";
 	private JTextField tfUsername;
-
+	
 	/**
 	 * Create the dialog.
 	 * @throws IOException 

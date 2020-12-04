@@ -17,9 +17,9 @@ public class GameClock extends Thread{
 				if (Snake.score < 10) { // Schlange wird mit höherer Punktzahl schneller
 					sleep(180);
 				} else if (Snake.score < 25) {
-					sleep(150);
+					sleep(160);
 				} else {
-					sleep(120);
+					sleep(140);
 				}
 				Snake.move();
 				Snake.waitToMove = false;

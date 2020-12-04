@@ -10,8 +10,8 @@ public class Gui {
 	JFrame jf;
 	Draw d;
 	
-	public static int width = 800, height = 600;
-	public static int xoff = 130, yoff = 20;
+	public static int width = 1000, height = 600;
+	public static int xoff = 230, yoff = 20;
 	
 	public void create() {
 		jf = new JFrame("Snakeology"); // Titel

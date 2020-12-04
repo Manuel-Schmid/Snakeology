@@ -1,6 +1,13 @@
 package gui;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import game.Snake;
@@ -8,8 +15,69 @@ import game.Snake;
 public class Draw extends JLabel{
 	
 	Point p;
-
+	private String pfad = "C:" + File.separator + "Users" + File.separator + "Many" + File.separator + "eclipse-workspace" + File.separator + "Snakeology" + File.separator + "data" + File.separator;
+	private String userFile = "currentUser.txt";
+	private String topUsersFile = "topUsers.txt";
+	private String topUsersScoresFile = "topUsersScores.txt";
+	private String crntUser;
+	
 	protected void paintComponent(Graphics g) {
+		
+		try {
+			BufferedReader crntUserReader = new BufferedReader(new FileReader(pfad+userFile));
+			crntUser = "";
+			String username = crntUserReader.readLine();
+			while(username != null) { // lesen bis keine Zeile mehr
+				crntUser = username;
+				username = crntUserReader.readLine();
+			} 
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		// Top List
+		DefaultListModel topUsers = new DefaultListModel();
+		JList listTopUsers = new JList(topUsers);
+		listTopUsers.setEnabled(false);
+		listTopUsers.setBounds(760, 135, 150, 93);
+		this.add(listTopUsers);
+		
+		// Top Scores List
+		ArrayList<String> topUsersScores = new ArrayList<String>();
+		
+		try {
+			BufferedReader topUsersScoresReader = new BufferedReader(new FileReader(pfad+topUsersScoresFile));
+			topUsersScores.clear();
+			String userScore = topUsersScoresReader.readLine();
+			while(userScore != null) { // lesen bis keine Zeile mehr
+				topUsersScores.add(userScore);
+				userScore = topUsersScoresReader.readLine();
+			}
+			
+			BufferedReader topUsersReader = new BufferedReader(new FileReader(pfad+topUsersFile));
+			topUsers.clear();
+			String user = topUsersReader.readLine();
+			int i = 0;
+			while(user != null) { // lesen bis keine Zeile mehr
+				String score = topUsersScores.get(i);
+				topUsers.addElement(user + "    " + score);
+				user = topUsersReader.readLine();
+				i++;
+			} 
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -17,6 +85,12 @@ public class Draw extends JLabel{
 		// Draw Background
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, Gui.width, Gui.height);
+		
+		JLabel lblUser = new JLabel("User: " + crntUser);
+		lblUser.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblUser.setBounds(760, 35, 200, 20);
+		lblUser.setForeground(Color.BLACK);
+		this.add(lblUser);
 		
 		// Draw Snake Tails
 		g.setColor(new Color(51, 204, 51)); // Schlangenfarbe für Tails
@@ -49,8 +123,8 @@ public class Draw extends JLabel{
 		
 		// Draw Score 
 		g.setFont(new Font("Arial", Font.BOLD, 20));
-		g.drawString("Score: "+ Snake.score,  5, 25);
-		g.drawString("Best: "+Snake.bestscore,  655,  25);
+		g.drawString("Score: "+ Snake.score,  130, 25);
+		g.drawString("Best: "+Snake.bestscore,  760,  25);
 		
 		repaint();
 		
