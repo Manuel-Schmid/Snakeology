@@ -16,7 +16,7 @@ public class Main {
 		LoginScreen loginS = new LoginScreen();
 		loginS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		loginS.setVisible(true);
-				
+		
 	}
 	
 }

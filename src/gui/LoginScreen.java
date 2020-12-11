@@ -23,10 +23,7 @@ public class LoginScreen extends JDialog {
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfUsername;
-	
-	private String pfad = "C:" + File.separator + "Users" + File.separator + "Many" + File.separator + "eclipse-workspace" + File.separator + "Snakeology" + File.separator + "data" + File.separator;
-	private String dateiname = "currentUser.txt";
-	
+		
 	/**
 	 * Create the dialog.
 	 * @throws IOException 
@@ -50,22 +47,28 @@ public class LoginScreen extends JDialog {
 		
 		JButton okButton = new JButton("OK");
 		
-		FileWriter fw = new FileWriter(pfad+dateiname, false);
-		BufferedWriter dateiAusgabe = new BufferedWriter(fw);
+		// Create and Fill User File
+		FileWriter fw = new FileWriter("currentUser.txt", false);
+		BufferedWriter userWriter = new BufferedWriter(fw);
+		// Create Other Files
+		FileWriter fw1 = new FileWriter("recordUser.txt", true);
+		BufferedWriter fileWriter1 = new BufferedWriter(fw1);
+		FileWriter fw2 = new FileWriter("recordUserScore.txt", true);
+		BufferedWriter fileWriter2 = new BufferedWriter(fw2);
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
-					// Vor & Nachname in BufferedReader speichern
-					dateiAusgabe.write(tfUsername.getText());
-					dateiAusgabe.flush(); // daten übertragen
+					// Username in BufferedReader speichern
+					userWriter.write(tfUsername.getText());
+					userWriter.flush(); // daten übertragen
 					tfUsername.setText("");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-								
+				
 				Gui g = new Gui();
 				GameClock gc = new GameClock();
 				g.create();
@@ -73,7 +76,7 @@ public class LoginScreen extends JDialog {
 				dispose();
 			}
 		});
-		
+				
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);

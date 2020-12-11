@@ -11,6 +11,10 @@ import gui.DeathScreen;
 public class GameClock extends Thread{
 	public static boolean running = true;
 	
+	public GameClock() {
+		
+	}
+	
 	public void run() {
 		while(running) { // Auch wenn es nicht funktioniert stürtzt es nicht ab, es wird nur ein StackTrace geprintet
 			try {
@@ -24,21 +28,12 @@ public class GameClock extends Thread{
 				Snake.move();
 				Snake.waitToMove = false;
 				Collision.collidePickUp();
-				if(Collision.collideSelf()) {
-					Snake.tails.clear();
-					Snake.head.setX(7);
-					Snake.head.setY(7);
-					// Score zurücksetzen
-					Snake.score = 0;
-				}
-				if(Collision.collideWall()) {
-					Snake.tails.clear();
-					Snake.head.setX(7);
-					Snake.head.setY(7);
-					// Score zurücksetzen
-					Snake.score = 0;
-				}
+				Collision.collideSelf();
+				Collision.collideWall();
 			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

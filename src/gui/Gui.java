@@ -6,8 +6,14 @@ import javax.swing.JFrame;
 import actions.KeyHandler;
 
 public class Gui {
+		
+	public Gui() {
+		if (jf != null) {
+			jf.dispose();
+		}
+	}
 	
-	JFrame jf;
+	static JFrame jf;
 	Draw d;
 	
 	public static int width = 1000, height = 600;

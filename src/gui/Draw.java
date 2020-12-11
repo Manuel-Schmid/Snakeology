@@ -10,28 +10,28 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import actions.Collision;
+import clocks.GameClock;
 import game.Snake;
 
 public class Draw extends JLabel{
 	
 	Point p;
-	private String pfad = "C:" + File.separator + "Users" + File.separator + "Many" + File.separator + "eclipse-workspace" + File.separator + "Snakeology" + File.separator + "data" + File.separator;
-	private String userFile = "currentUser.txt";
-	private String topUsersFile = "topUsers.txt";
-	private String topUsersScoresFile = "topUsersScores.txt";
 	private String crntUser;
+	private String recUser;
+	private String recScore;
 	
 	protected void paintComponent(Graphics g) {
 		
+		// Current User
 		try {
-			BufferedReader crntUserReader = new BufferedReader(new FileReader(pfad+userFile));
+			BufferedReader crntUserReader = new BufferedReader(new FileReader("currentUser.txt"));
 			crntUser = "";
 			String username = crntUserReader.readLine();
 			while(username != null) { // lesen bis keine Zeile mehr
 				crntUser = username;
 				username = crntUserReader.readLine();
-			} 
-			
+			} 	
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -40,36 +40,32 @@ public class Draw extends JLabel{
 			e1.printStackTrace();
 		}
 		
-		// Top List
-		DefaultListModel topUsers = new DefaultListModel();
-		JList listTopUsers = new JList(topUsers);
-		listTopUsers.setEnabled(false);
-		listTopUsers.setBounds(760, 135, 150, 93);
-		this.add(listTopUsers);
-		
-		// Top Scores List
-		ArrayList<String> topUsersScores = new ArrayList<String>();
-		
+		// Record User
 		try {
-			BufferedReader topUsersScoresReader = new BufferedReader(new FileReader(pfad+topUsersScoresFile));
-			topUsersScores.clear();
-			String userScore = topUsersScoresReader.readLine();
-			while(userScore != null) { // lesen bis keine Zeile mehr
-				topUsersScores.add(userScore);
-				userScore = topUsersScoresReader.readLine();
-			}
-			
-			BufferedReader topUsersReader = new BufferedReader(new FileReader(pfad+topUsersFile));
-			topUsers.clear();
-			String user = topUsersReader.readLine();
-			int i = 0;
-			while(user != null) { // lesen bis keine Zeile mehr
-				String score = topUsersScores.get(i);
-				topUsers.addElement(user + "    " + score);
-				user = topUsersReader.readLine();
-				i++;
+			BufferedReader recUserReader = new BufferedReader(new FileReader("recordUser.txt"));
+			recUser = "";
+			String recordUsername = recUserReader.readLine();
+			while(recordUsername != null) { // lesen bis keine Zeile mehr
+				recUser = recordUsername;
+				recordUsername = recUserReader.readLine();
 			} 
-			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		// Record User Score
+		try {
+			BufferedReader recUserScoreReader = new BufferedReader(new FileReader("recordUserScore.txt"));
+			recScore = "";
+			String recordUserScore = recUserScoreReader.readLine();
+			while(recordUserScore != null) { // lesen bis keine Zeile mehr
+				recScore = recordUserScore;
+				recordUserScore = recUserScoreReader.readLine();
+			} 
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -91,7 +87,7 @@ public class Draw extends JLabel{
 		lblUser.setBounds(760, 35, 200, 20);
 		lblUser.setForeground(Color.BLACK);
 		this.add(lblUser);
-		
+
 		// Draw Snake Tails
 		g.setColor(new Color(51, 204, 51)); // Schlangenfarbe für Tails
 		for(int i = 0; i < Snake.tails.size(); i++) {
@@ -123,11 +119,14 @@ public class Draw extends JLabel{
 		
 		// Draw Score 
 		g.setFont(new Font("Arial", Font.BOLD, 20));
-		g.drawString("Score: "+ Snake.score,  130, 25);
-		g.drawString("Best: "+Snake.bestscore,  760,  25);
+		g.drawString("Score: " + Snake.score,  130, 25);
+		g.drawString("Your best: " + Snake.bestscore,  760,  25);
+		// Record
+		g.drawString("All-time record",  760,  165);
+		g.drawString("User: " + recUser,  760,  195);
+		g.drawString("Score: " + recScore,  760,  225);
 		
-		repaint();
-		
+		repaint();		
 	}
 	
 }
