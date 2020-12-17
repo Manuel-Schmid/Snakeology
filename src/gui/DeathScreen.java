@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,10 +22,11 @@ import game.Snake;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class DeathScreen extends JDialog { // JDialog
+
+	private static final long serialVersionUID = -1567277742685379400L;
 
 	private final JPanel contentPanel = new JPanel();
 	

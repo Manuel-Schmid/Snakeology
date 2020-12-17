@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JDialog;
 
-import clocks.GameClock;
-import gui.DeathScreen;
-import gui.Gui;
 import gui.LoginScreen;
 
 public class Main {

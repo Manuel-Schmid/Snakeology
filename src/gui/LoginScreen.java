@@ -68,7 +68,6 @@ public class LoginScreen extends JDialog {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				Gui g = new Gui();
 				GameClock gc = new GameClock();
 				g.create();
@@ -76,7 +75,7 @@ public class LoginScreen extends JDialog {
 				dispose();
 			}
 		});
-				
+		
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
