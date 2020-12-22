@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class PauseScreen extends JDialog {
 
@@ -34,7 +35,8 @@ public class PauseScreen extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JLabel lblGamePaused = new JLabel("Game Paused");
-		lblGamePaused.setBounds(110, 97, 197, 40);
+		lblGamePaused.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGamePaused.setBounds(96, 97, 241, 40);
 		lblGamePaused.setFont(new Font("Tahoma", Font.PLAIN, 33));
 		contentPanel.add(lblGamePaused);
 		setLocationRelativeTo(null);
