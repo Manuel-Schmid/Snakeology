@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JDialog;
 
 import clocks.GameClock;
+import game.PickUp;
 import game.Snake;
 import gui.DeathScreen;
 
@@ -40,13 +41,17 @@ public class Collision {
 	
 	public static void collidePickUp() {
 		if(Snake.head.getX() == Snake.pickup.getX() && Snake.head.getY() == Snake.pickup.getY()) {
+			// Score erhöhen
+			if (PickUp.isGolden) {
+				Snake.score += 3;
+			} else {
+				Snake.score += 1;
+			}
+			if (Snake.score > Snake.bestscore) {
+				Snake.bestscore = Snake.score;
+			}
 			Snake.pickup.reset();
 			Snake.addTail();
-			// Score erhöhen
-			Snake.score += 1; 
-			 if (Snake.score > Snake.bestscore) {
-				 Snake.bestscore = Snake.score;
-			 }
 		}
 	}
 }

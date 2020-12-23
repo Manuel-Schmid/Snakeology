@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import actions.Collision;
 import clocks.GameClock;
+import game.PickUp;
 import game.Snake;
 
 public class Draw extends JLabel{
@@ -101,7 +102,11 @@ public class Draw extends JLabel{
 		 g.fillRect(p.x, p.y, 32, 32);
 		
 		// Draw PickUp
-		 g.setColor(new Color(204,51,0));
+		 if (PickUp.isGolden) {
+			 g.setColor(new Color(255, 200, 0));
+		 } else {
+			 g.setColor(new Color(204,51,0));
+		 }
 		 p = Snake.ptc(Snake.pickup.getX(), Snake.pickup.getY());
 		 g.fillRect(p.x,  p.y, 32,  32);
 		 

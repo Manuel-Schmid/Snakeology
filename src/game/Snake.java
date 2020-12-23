@@ -41,7 +41,7 @@ public class Snake {
 			}
 		}
 		
-		// Move first Tail to Head: Setzt erstes Tail an Position des Heads bei bewegung				
+		// Move first Tail to Head: Setzt erstes Tail an Position des Heads bei Bewegung				
 		if(tails.size() >= 1) {
 			if(tails.get(0).isWait()) { // Wenn Sie sich noch nicht bewegen kann
 				tails.get(0).setWait(false);
