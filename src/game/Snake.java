@@ -3,6 +3,7 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import clocks.GameClock;
 import gui.Gui;
 
 public class Snake {
@@ -17,13 +18,24 @@ public class Snake {
 	
 	public static ArrayList<Tail> tails = new ArrayList<Tail>();
 	
-	public static PickUp pickup = new PickUp();
+	public static PickUp pickup = new PickUp();	
+	
+	public static Obstacle obstacle = new Obstacle();
 	
 	public static void addTail() { // Fügt Immer Head und dann Tails ein
 		if(tails.size() < 1) {
 			tails.add(new Tail(head.getX(), head.getY()));
 		} else {
 			tails.add(new Tail(tails.get(tails.size()-1).x, tails.get(tails.size()-1).y));
+		}
+		if (tails.size() % 5 == 0) {
+			obstacle = new Obstacle();
+		}
+	}
+	
+	public static void removeTail() { // Entfernt ein Tail von der Schlange
+		if(tails.size() > 0) {
+			tails.remove(tails.size() - 1);
 		}
 	}
 	

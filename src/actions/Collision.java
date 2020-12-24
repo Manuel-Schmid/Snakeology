@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JDialog;
 
 import clocks.GameClock;
+import game.Obstacle;
 import game.PickUp;
 import game.Snake;
 import gui.DeathScreen;
@@ -44,14 +45,44 @@ public class Collision {
 			// Score erhöhen
 			if (PickUp.isGolden) {
 				Snake.score += 3;
+				Snake.addTail();
+				Snake.addTail();
+				Snake.addTail();
 			} else {
 				Snake.score += 1;
+				Snake.addTail();
 			}
 			if (Snake.score > Snake.bestscore) {
 				Snake.bestscore = Snake.score;
 			}
 			Snake.pickup.reset();
-			Snake.addTail();
+		}
+	}
+	
+	public static void collideNormalObstacle() {
+		if(Obstacle.isBlack == false && Snake.head.getX() == Snake.obstacle.getX() && Snake.head.getY() == Snake.obstacle.getY()) {
+			// Score verringern
+			if (Snake.score > 1) {
+				Snake.score -= 1;
+			} else {
+				Snake.score = 0;
+			}
+			Snake.obstacle.reset();
+			Snake.removeTail();
+		}
+	}
+	
+	public static void collideBlackObstacle() throws IOException {
+		if(Obstacle.isBlack == true && Snake.head.getX() == Snake.obstacle.getX() && Snake.head.getY() == Snake.obstacle.getY()) {
+			// Kill Snake
+			Snake.tails.clear();
+			Snake.head.setX(7);
+			Snake.head.setY(7);
+			// Spiel stoppen & DeathScreen anzeigen
+			GameClock.running = false;
+			DeathScreen deathS = new DeathScreen();
+			deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			deathS.setVisible(true);
 		}
 	}
 }

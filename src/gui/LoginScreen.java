@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class LoginScreen extends JDialog {
 	
@@ -37,9 +38,32 @@ public class LoginScreen extends JDialog {
 		setLocationRelativeTo(null);
 		
 		tfUsername = new JTextField();
-		tfUsername.setBounds(139, 99, 146, 26);
+		tfUsername.setBounds(139, 134, 146, 26);
 		contentPanel.add(tfUsername);
 		tfUsername.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Username:");
+		lblNewLabel.setBounds(139, 112, 72, 14);
+		contentPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Difficulty");
+		lblNewLabel_1.setBounds(108, 46, 49, 14);
+		contentPanel.add(lblNewLabel_1);
+		
+		JButton btnEasy = new JButton("easy");
+
+		btnEasy.setBounds(108, 71, 65, 23);
+		contentPanel.add(btnEasy);
+		
+		JButton btnNormal = new JButton("normal");
+
+		btnNormal.setBounds(176, 71, 83, 23);
+		contentPanel.add(btnNormal);
+		
+		JButton btnHard = new JButton("hard");
+
+		btnHard.setBounds(262, 71, 65, 23);
+		contentPanel.add(btnHard);
 		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -58,7 +82,9 @@ public class LoginScreen extends JDialog {
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				if (GameClock.difficulty != "easy" && GameClock.difficulty != "normal" && GameClock.difficulty != "hard") {
+					GameClock.difficulty = "normal";
+				}
 				try {
 					// Username in BufferedReader speichern
 					userWriter.write(tfUsername.getText());
@@ -79,7 +105,7 @@ public class LoginScreen extends JDialog {
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
-			
+		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,6 +115,32 @@ public class LoginScreen extends JDialog {
 		
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
-	
+		
+		btnEasy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameClock.difficulty = "easy";
+				btnEasy.setEnabled(false);
+				btnNormal.setEnabled(true);
+				btnHard.setEnabled(true);
+			}
+		});
+		
+		btnNormal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameClock.difficulty = "normal";
+				btnEasy.setEnabled(true);
+				btnNormal.setEnabled(false);
+				btnHard.setEnabled(true);
+			}
+		});
+		
+		btnHard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GameClock.difficulty = "hard";
+				btnEasy.setEnabled(true);
+				btnNormal.setEnabled(true);
+				btnHard.setEnabled(false);
+			}
+		});
 	}
 }

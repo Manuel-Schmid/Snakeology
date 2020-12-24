@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import actions.Collision;
 import clocks.GameClock;
+import game.Obstacle;
 import game.PickUp;
 import game.Snake;
 
@@ -109,6 +110,17 @@ public class Draw extends JLabel{
 		 }
 		 p = Snake.ptc(Snake.pickup.getX(), Snake.pickup.getY());
 		 g.fillRect(p.x,  p.y, 32,  32);
+		 
+		 // Draw Obstacle
+		 if (GameClock.difficulty == "hard") {
+			 if (Obstacle.isBlack) {
+				 g.setColor(new Color(0,0,0));
+			 } else {
+				 g.setColor(new Color(128,128,128));
+			 }
+			 p = Snake.ptc(Snake.obstacle.getX(), Snake.obstacle.getY());
+			 g.fillRect(p.x,  p.y, 32,  32);
+		 }
 		 
 		// Draw Grid
 		g.setColor(Color.GRAY);

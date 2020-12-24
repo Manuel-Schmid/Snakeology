@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clocks.GameClock;
+import game.Obstacle;
+import game.PickUp;
 import game.Snake;
 
 import java.awt.event.ActionListener;
@@ -137,6 +139,21 @@ public class DeathScreen extends JDialog { // JDialog
 		label.setBounds(143, 138, 133, 38);
 		contentPanel.add(label);
 		
+		JButton btnHard = new JButton("Hard");
+
+		btnHard.setBounds(266, 187, 89, 23);
+		contentPanel.add(btnHard);
+		
+		JButton btnNormal = new JButton("Normal");
+
+		btnNormal.setBounds(167, 187, 89, 23);
+		contentPanel.add(btnNormal);
+		
+		JButton btnEasy = new JButton("Easy");
+
+		btnEasy.setBounds(68, 187, 89, 23);
+		contentPanel.add(btnEasy);
+		
 		if (isNewRecord) {
 			JLabel lblNewRecord = new JLabel("NEW RECORD !!!");
 			lblNewRecord.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -168,6 +185,8 @@ public class DeathScreen extends JDialog { // JDialog
 				GameClock gc = new GameClock();
 				g.create();
 				gc.start(); // Methode aus Thread
+				Snake.pickup = new PickUp();
+				Snake.obstacle = new Obstacle();
 				GameClock.running = true;
 				dispose();
 			}
@@ -177,6 +196,47 @@ public class DeathScreen extends JDialog { // JDialog
 			public void actionPerformed(ActionEvent e) {
 				Gui.jf.dispose();
 				dispose();
+			}
+		});
+		
+		if (GameClock.difficulty == "easy") {
+			btnEasy.setEnabled(false);
+			btnNormal.setEnabled(true);
+			btnHard.setEnabled(true);
+		} else if (GameClock.difficulty == "normal") {
+			btnEasy.setEnabled(true);
+			btnNormal.setEnabled(false);
+			btnHard.setEnabled(true);
+		} else if (GameClock.difficulty == "hard") {
+			btnEasy.setEnabled(true);
+			btnNormal.setEnabled(true);
+			btnHard.setEnabled(false);
+		}
+		
+		btnEasy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameClock.difficulty = "easy";
+				btnEasy.setEnabled(false);
+				btnNormal.setEnabled(true);
+				btnHard.setEnabled(true);
+			}
+		});
+		
+		btnNormal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameClock.difficulty = "normal";
+				btnEasy.setEnabled(true);
+				btnNormal.setEnabled(false);
+				btnHard.setEnabled(true);
+			}
+		});
+		
+		btnHard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GameClock.difficulty = "hard";
+				btnEasy.setEnabled(true);
+				btnNormal.setEnabled(true);
+				btnHard.setEnabled(false);
 			}
 		});
 		
