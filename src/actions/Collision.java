@@ -9,34 +9,49 @@ import game.Obstacle;
 import game.PickUp;
 import game.Snake;
 import gui.DeathScreen;
+import gui.Draw;
 
 public class Collision {
 	
 	public static void collideSelf() throws IOException {
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(Snake.head.getX() == Snake.tails.get(i).getX() && Snake.head.getY() == Snake.tails.get(i).getY() && !Snake.tails.get(i).isWait()) {
-				Snake.tails.clear();
 				Snake.head.setX(7);
 				Snake.head.setY(7);
-				// Spiel stoppen & DeathScreen anzeigen
-				GameClock.running = false;
-				DeathScreen deathS = new DeathScreen();
-				deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				deathS.setVisible(true);
+				if (GameClock.extraLife == true) {
+					GameClock.extraLife = false;
+				} else {
+					Snake.tails.clear();
+					// Spiel stoppen & DeathScreen anzeigen
+					GameClock.running = false;
+					DeathScreen deathS = new DeathScreen();
+					deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					deathS.setVisible(true);
+				}
 			}
 		}
 	}
 	
 	public static void collideWall() throws IOException {	
 		if (Snake.head.getX()<0 || Snake.head.getX() > 15 || Snake.head.getY()<0 || Snake.head.getY() > 15 ) {// Wenn der Head oben, unten links oder rechts in die Border fährt
-			Snake.tails.clear();
-			Snake.head.setX(7);
-			Snake.head.setY(7);
-			// Spiel stoppen & DeathScreen anzeigen
-			GameClock.running = false;
-			DeathScreen deathS = new DeathScreen();
-			deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			deathS.setVisible(true);
+			if (GameClock.difficulty == "hard") {
+				Snake.head.setX(7);
+				Snake.head.setY(7);
+				Snake.tails.clear();
+				// Spiel stoppen & DeathScreen anzeigen
+				GameClock.running = false;
+				DeathScreen deathS = new DeathScreen();
+				deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				deathS.setVisible(true);
+			} else if (Snake.head.getX()<0){
+				Snake.head.setX(15);
+			} else if (Snake.head.getX()>15){
+				Snake.head.setX(0);
+			} else if (Snake.head.getY()<0){
+				Snake.head.setY(15);
+			} else if (Snake.head.getY()>15){
+				Snake.head.setY(0);
+			}
 		}
 	}
 	

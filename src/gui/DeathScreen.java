@@ -35,13 +35,13 @@ public class DeathScreen extends JDialog { // JDialog
 	private String crntUser;
 	private String recScore;
 	public boolean isNewRecord = false;
-	
+		
 	/**
 	 * Create the dialog.
 	 * @throws IOException 
 	 */
 	public DeathScreen() throws IOException {
-		
+				
 		Gui.jf.setEnabled(false);
 		
 		// get Current User

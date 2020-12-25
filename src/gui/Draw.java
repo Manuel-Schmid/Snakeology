@@ -22,6 +22,11 @@ public class Draw extends JLabel{
 	private String crntUser;
 	private String recUser;
 	private String recScore;
+	public static JLabel lblHeart = new JLabel("");
+	
+	public void setCrntUser(String string) {
+		crntUser = string;
+	}
 	
 	protected void paintComponent(Graphics g) {
 		
@@ -89,7 +94,15 @@ public class Draw extends JLabel{
 		lblUser.setBounds(760, 35, 200, 20);
 		lblUser.setForeground(Color.BLACK);
 		this.add(lblUser);
-
+		
+		// Draw Heart
+		if (GameClock.extraLife == true && GameClock.running == true) {
+			Image img = new ImageIcon(this.getClass().getResource("/heart48.png")).getImage();
+			lblHeart.setIcon(new ImageIcon(img));
+			lblHeart.setBounds(145, 50, 48, 48);
+			this.add(lblHeart);
+		}
+		
 		// Draw Snake Tails
 		g.setColor(new Color(51, 204, 51)); // Schlangenfarbe für Tails
 		for(int i = 0; i < Snake.tails.size(); i++) {
@@ -112,7 +125,7 @@ public class Draw extends JLabel{
 		 g.fillRect(p.x,  p.y, 32,  32);
 		 
 		 // Draw Obstacle
-		 if (GameClock.difficulty == "hard") {
+		 if (GameClock.difficulty == "hard" || GameClock.difficulty == "normal" ) {
 			 if (Obstacle.isBlack) {
 				 g.setColor(new Color(0,0,0));
 			 } else {

@@ -2,7 +2,9 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -47,7 +49,7 @@ public class LoginScreen extends JDialog {
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Difficulty");
-		lblNewLabel_1.setBounds(108, 46, 49, 14);
+		lblNewLabel_1.setBounds(108, 46, 72, 14);
 		contentPanel.add(lblNewLabel_1);
 		
 		JButton btnEasy = new JButton("easy");
@@ -64,7 +66,7 @@ public class LoginScreen extends JDialog {
 
 		btnHard.setBounds(262, 71, 65, 23);
 		contentPanel.add(btnHard);
-		
+				
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);

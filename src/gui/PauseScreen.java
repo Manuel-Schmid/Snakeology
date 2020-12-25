@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 public class PauseScreen extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	
 	/**
 	 * Create the dialog.
 	 */

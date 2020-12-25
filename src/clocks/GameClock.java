@@ -6,22 +6,26 @@ import java.io.IOException;
 import actions.Collision;
 import game.Obstacle;
 import game.Snake;
+import gui.Draw;
 
 public class GameClock extends Thread{
 	public static boolean running = true;
 	public static String difficulty;
+	public static boolean extraLife = false;
 	
 	public GameClock() {
 		
 	}
 	
 	public void run() {
+		if (difficulty == "easy") {	extraLife = true; } else { extraLife = false; }
 		while(running) { // Auch wenn es nicht funktioniert stürtzt es nicht ab, es wird nur ein StackTrace geprintet
 			try {
-				if (GameClock.difficulty == "easy") {
-					sleep(210);
+				if (difficulty == "easy") {
+					if (extraLife == true) { Draw.lblHeart.setVisible(true); } else { Draw.lblHeart.setVisible(false); }
+					sleep(250);
 				}
-				else if (GameClock.difficulty == "normal") {
+				else if (difficulty == "normal") {
 					if (Snake.score < 10) { // Schlange wird mit höherer Punktzahl schneller
 						sleep(185);
 					} else if (Snake.score < 15) {
@@ -32,7 +36,7 @@ public class GameClock extends Thread{
 						sleep(155);
 					}
 				}
-				else if (GameClock.difficulty == "hard") {
+				else if (difficulty == "hard") {
 					if (Snake.score < 10) { // Schlange wird mit höherer Punktzahl schneller
 						sleep(170);
 					} else if (Snake.score < 15) {
@@ -45,13 +49,12 @@ public class GameClock extends Thread{
 						sleep(110);
 					}
 				}
-
 				Snake.move();
 				Snake.waitToMove = false;
 				Collision.collidePickUp();
 				Collision.collideSelf();
 				Collision.collideWall();
-				if (GameClock.difficulty == "hard" ) {
+				if (difficulty == "hard" || GameClock.difficulty == "normal" ) {
 					Collision.collideNormalObstacle();
 					Collision.collideBlackObstacle();
 				}
