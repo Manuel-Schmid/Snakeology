@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
 
 public class LoginScreen extends JDialog {
 	
@@ -40,12 +41,12 @@ public class LoginScreen extends JDialog {
 		setLocationRelativeTo(null);
 		
 		tfUsername = new JTextField();
-		tfUsername.setBounds(139, 134, 146, 26);
+		tfUsername.setBounds(108, 130, 151, 26);
 		contentPanel.add(tfUsername);
 		tfUsername.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Username:");
-		lblNewLabel.setBounds(139, 112, 72, 14);
+		lblNewLabel.setBounds(108, 115, 72, 14);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Difficulty");
@@ -66,7 +67,11 @@ public class LoginScreen extends JDialog {
 
 		btnHard.setBounds(262, 71, 65, 23);
 		contentPanel.add(btnHard);
-				
+		
+		JCheckBox checkBoniOn = new JCheckBox("Boni");
+		checkBoniOn.setBounds(268, 132, 59, 23);
+		contentPanel.add(checkBoniOn);
+						
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -100,6 +105,9 @@ public class LoginScreen extends JDialog {
 				GameClock gc = new GameClock();
 				g.create();
 				gc.start(); // Methode aus Thread
+				if (checkBoniOn.isSelected()) {
+					GameClock.boniOn = true;
+				} else {GameClock.boniOn = false;}
 				dispose();
 			}
 		});

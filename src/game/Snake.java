@@ -22,6 +22,8 @@ public class Snake {
 	
 	public static Obstacle obstacle = new Obstacle();
 	
+	public static Bonus bonus = new Bonus();
+	
 	public static void addTail() { // Fügt Immer Head und dann Tails ein
 		if(tails.size() < 1) {
 			tails.add(new Tail(head.getX(), head.getY()));

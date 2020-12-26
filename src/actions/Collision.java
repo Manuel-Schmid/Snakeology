@@ -1,10 +1,12 @@
 package actions;
 
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JDialog;
 
 import clocks.GameClock;
+import game.Bonus;
 import game.Obstacle;
 import game.PickUp;
 import game.Snake;
@@ -13,14 +15,16 @@ import gui.Draw;
 
 public class Collision {
 	
+	public static String activeBonus;
+	
 	public static void collideSelf() throws IOException {
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(Snake.head.getX() == Snake.tails.get(i).getX() && Snake.head.getY() == Snake.tails.get(i).getY() && !Snake.tails.get(i).isWait()) {
-				Snake.head.setX(7);
-				Snake.head.setY(7);
 				if (GameClock.extraLife == true) {
 					GameClock.extraLife = false;
 				} else {
+					Snake.head.setX(7);
+					Snake.head.setY(7);
 					Snake.tails.clear();
 					// Spiel stoppen & DeathScreen anzeigen
 					GameClock.running = false;
@@ -35,14 +39,27 @@ public class Collision {
 	public static void collideWall() throws IOException {	
 		if (Snake.head.getX()<0 || Snake.head.getX() > 15 || Snake.head.getY()<0 || Snake.head.getY() > 15 ) {// Wenn der Head oben, unten links oder rechts in die Border fährt
 			if (GameClock.difficulty == "hard") {
-				Snake.head.setX(7);
-				Snake.head.setY(7);
-				Snake.tails.clear();
-				// Spiel stoppen & DeathScreen anzeigen
-				GameClock.running = false;
-				DeathScreen deathS = new DeathScreen();
-				deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				deathS.setVisible(true);
+				if (GameClock.extraLife == true) { // Extraleben abziehen und auf anderer Seite spawnen
+					GameClock.extraLife = false;
+					if (Snake.head.getX()<0) {
+						Snake.head.setX(15);
+					} else if (Snake.head.getX()>15){
+						Snake.head.setX(0);
+					} else if (Snake.head.getY()<0){
+						Snake.head.setY(15);
+					} else if (Snake.head.getY()>15){
+						Snake.head.setY(0);
+					}
+				} else {
+					Snake.head.setX(7);
+					Snake.head.setY(7);
+					Snake.tails.clear();
+					// Spiel stoppen & DeathScreen anzeigen
+					GameClock.running = false;
+					DeathScreen deathS = new DeathScreen();
+					deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					deathS.setVisible(true);
+				}
 			} else if (Snake.head.getX()<0){
 				Snake.head.setX(15);
 			} else if (Snake.head.getX()>15){
@@ -89,15 +106,35 @@ public class Collision {
 	
 	public static void collideBlackObstacle() throws IOException {
 		if(Obstacle.isBlack == true && Snake.head.getX() == Snake.obstacle.getX() && Snake.head.getY() == Snake.obstacle.getY()) {
-			// Kill Snake
-			Snake.tails.clear();
-			Snake.head.setX(7);
-			Snake.head.setY(7);
-			// Spiel stoppen & DeathScreen anzeigen
-			GameClock.running = false;
-			DeathScreen deathS = new DeathScreen();
-			deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			deathS.setVisible(true);
+			if (GameClock.extraLife == true) {
+				GameClock.extraLife = false;
+			} else {
+				Snake.head.setX(7);
+				Snake.head.setY(7);
+				Snake.tails.clear();
+				GameClock.running = false;
+				DeathScreen deathS = new DeathScreen();
+				deathS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				deathS.setVisible(true);
+			}
+		}
+	}
+	
+	public static void collideBonus() {
+		if(Snake.head.getX() == Snake.bonus.getX() && Snake.head.getY() == Snake.bonus.getY()) {
+			Snake.bonus.setX(-5);
+			Snake.bonus.setY(-5);
+			GameClock.bonusTimer = 40;
+			activeBonus = Bonus.bonus;
+			System.out.println(activeBonus);
+			if (activeBonus == "extraLife") {
+				GameClock.extraLife = true;
+			} else if (activeBonus == "speedup") {
+				GameClock.bonusTimer = 60;
+			} else if (activeBonus == "teleporter") {
+				Snake.head.setX(ThreadLocalRandom.current().nextInt(0,15));
+				Snake.head.setY(ThreadLocalRandom.current().nextInt(0,15));
+			}
 		}
 	}
 }

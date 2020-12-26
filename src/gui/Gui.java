@@ -2,8 +2,10 @@ package gui;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import actions.KeyHandler;
+import clocks.GameClock;
 
 public class Gui {
 		
@@ -37,4 +39,5 @@ public class Gui {
 		jf.setVisible(true);
 		
 	}
+	
 }

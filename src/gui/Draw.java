@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import actions.Collision;
 import clocks.GameClock;
+import game.Bonus;
 import game.Obstacle;
 import game.PickUp;
 import game.Snake;
@@ -23,10 +24,6 @@ public class Draw extends JLabel{
 	private String recUser;
 	private String recScore;
 	public static JLabel lblHeart = new JLabel("");
-	
-	public void setCrntUser(String string) {
-		crntUser = string;
-	}
 	
 	protected void paintComponent(Graphics g) {
 		
@@ -96,7 +93,7 @@ public class Draw extends JLabel{
 		this.add(lblUser);
 		
 		// Draw Heart
-		if (GameClock.extraLife == true && GameClock.running == true) {
+		if (GameClock.running == true) {
 			Image img = new ImageIcon(this.getClass().getResource("/heart48.png")).getImage();
 			lblHeart.setIcon(new ImageIcon(img));
 			lblHeart.setBounds(145, 50, 48, 48);
@@ -135,6 +132,21 @@ public class Draw extends JLabel{
 			 g.fillRect(p.x,  p.y, 32,  32);
 		 }
 		 
+		// Draw Bonus
+		if (GameClock.boniOn) {
+			 if (Bonus.bonus == "slowdown") {
+				 g.setColor(new Color(242, 255, 0));
+			 } else if (Bonus.bonus == "extraLife") {
+				 g.setColor(new Color(125, 125, 0));
+			 } else if (Bonus.bonus == "speedup") {
+				 g.setColor(new Color(0, 0, 204));
+			 } else if (Bonus.bonus == "teleporter") {
+				 g.setColor(new Color(204, 0, 255));
+			 }
+			 p = Snake.ptc(Snake.bonus.getX(), Snake.bonus.getY());
+			 g.fillRect(p.x,  p.y, 32,  32);
+		}
+		
 		// Draw Grid
 		g.setColor(Color.GRAY);
 		for(int x = 0; x < 16; x++) {
@@ -146,6 +158,9 @@ public class Draw extends JLabel{
 		// Draw Border
 		g.setColor(Color.BLACK);
 		g.drawRect(Gui.xoff,  Gui.yoff,  512,  512);
+		
+		// Draw Bonus Timer
+		g.drawString(String.valueOf(GameClock.bonusTimer), 760,  195);
 		
 		// Draw Score 
 		g.setFont(new Font("Arial", Font.BOLD, 20));

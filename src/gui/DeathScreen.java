@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
 
 public class DeathScreen extends JDialog { // JDialog
 
@@ -154,6 +155,15 @@ public class DeathScreen extends JDialog { // JDialog
 		btnEasy.setBounds(68, 187, 89, 23);
 		contentPanel.add(btnEasy);
 		
+		JCheckBox checkBoniOn = new JCheckBox("Boni");
+		checkBoniOn.setBounds(296, 147, 59, 23);
+		contentPanel.add(checkBoniOn);
+		if (GameClock.boniOn) {
+			checkBoniOn.setSelected(true);
+		} else { 
+			checkBoniOn.setSelected(false); 
+		}
+		
 		if (isNewRecord) {
 			JLabel lblNewRecord = new JLabel("NEW RECORD !!!");
 			lblNewRecord.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -188,6 +198,9 @@ public class DeathScreen extends JDialog { // JDialog
 				Snake.pickup = new PickUp();
 				Snake.obstacle = new Obstacle();
 				GameClock.running = true;
+				if (checkBoniOn.isSelected()) {
+					GameClock.boniOn = true;
+				} else {GameClock.boniOn = false;}
 				dispose();
 			}
 		});
