@@ -17,6 +17,12 @@ public class PickUp {
 				this.reset();
 			}
 		}
+		/*if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
+			this.reset();
+		}
+		if(x == Snake.bonus.getX() && y == Snake.bonus.getY()) {
+			this.reset();
+		}*/
 	}
 	
 	public void reset() {
@@ -32,6 +38,12 @@ public class PickUp {
 		// Hier soll verhindert werden, dass ein Apfel in einem Tail spawnt
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
+				this.reset();
+			}
+			if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
+				this.reset();
+			}
+			if(x == Snake.bonus.getX() && y == Snake.bonus.getY()) {
 				this.reset();
 			}
 		}

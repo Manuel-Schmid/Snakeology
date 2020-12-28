@@ -6,22 +6,26 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import actions.Collision;
 import clocks.GameClock;
 import game.Obstacle;
 import game.PickUp;
 import game.Snake;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -35,7 +39,9 @@ public class DeathScreen extends JDialog { // JDialog
 	
 	private String crntUser;
 	private String recScore;
+	private String record;
 	public boolean isNewRecord = false;
+	String splitter = ";";
 		
 	/**
 	 * Create the dialog.
@@ -44,7 +50,7 @@ public class DeathScreen extends JDialog { // JDialog
 	public DeathScreen() throws IOException {
 				
 		Gui.jf.setEnabled(false);
-		
+				
 		// get Current User
 		try {
 			BufferedReader crntUserReader = new BufferedReader(new FileReader("currentUser.txt"));
@@ -63,54 +69,44 @@ public class DeathScreen extends JDialog { // JDialog
 			e1.printStackTrace();
 		}
 		
-		// get Record User Score
+		// New Record Handling
 		try {
-			BufferedReader recUserScoreReader = new BufferedReader(new FileReader("recordUserScore.txt"));
-			recScore = "";
-			String recordUserScore = recUserScoreReader.readLine();
-			while(recordUserScore != null) { // lesen bis keine Zeile mehr
-				recScore = recordUserScore;
-				recordUserScore = recUserScoreReader.readLine();
-			} 
+			BufferedReader recReader = new BufferedReader(new FileReader("record.txt"));
+			record = "";
+			String rec = recReader.readLine();
+			while (rec != null) {
+				record = rec;
+				rec = recReader.readLine();
+			}
+			if(record == "") {
+				record = " " + splitter + 0 + splitter + " ";
+			}
+			String[] recordArr = record.split(splitter);
+			int recordScore = Integer.parseInt(recordArr[1]);
+			
+			if (Snake.score > recordScore) {
+				isNewRecord = true;
+				// Record Writer
+				String myScore = Integer.toString(Snake.score);
+				FileWriter fwRecord = new FileWriter("record.txt", false);
+				BufferedWriter recordWriter = new BufferedWriter(fwRecord);
+				try {
+					recordWriter.write("");
+					recordWriter.flush();
+					recordWriter.write(crntUser + splitter + myScore + splitter + GameClock.difficulty);
+					recordWriter.flush(); // daten übertragen
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+				isNewRecord = true;
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-		
-		if(recScore == "") {
-			recScore = "0";
-		}
-		int recordScore = Integer.parseInt(recScore);
-		if (Snake.score > recordScore) {
-			isNewRecord = true;
-			// Record User
-			FileWriter fwUser = new FileWriter("recordUser.txt", false);
-			BufferedWriter writerUser = new BufferedWriter(fwUser);
-			try {
-				writerUser.write("");
-				writerUser.flush();
-				writerUser.write(crntUser);
-				writerUser.flush(); // daten übertragen
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// Record User Score
-			String myScore = Integer.toString(Snake.score);
-			FileWriter fwScore = new FileWriter("recordUserScore.txt", false);
-			BufferedWriter writerScore = new BufferedWriter(fwScore);
-			try {
-				writerScore.write("");
-				writerScore.flush();
-				writerScore.write(myScore);
-				writerScore.flush(); // daten übertragen
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		setBounds(100, 100, 450, 300);
@@ -195,11 +191,13 @@ public class DeathScreen extends JDialog { // JDialog
 				GameClock gc = new GameClock();
 				g.create();
 				gc.start(); // Methode aus Thread
-				Snake.pickup = new PickUp();
-				Snake.obstacle = new Obstacle();
+				Snake.pickup.reset();
+				Snake.obstacle.reset();
 				GameClock.running = true;
 				if (checkBoniOn.isSelected()) {
 					GameClock.boniOn = true;
+					Collision.activeBonus = "";
+					Snake.bonus.reset();
 				} else {GameClock.boniOn = false;}
 				dispose();
 			}
@@ -253,5 +251,11 @@ public class DeathScreen extends JDialog { // JDialog
 			}
 		});
 		
+	}
+	
+	// Close whole Game on Window Close
+	public void windowClosing(WindowEvent e) {
+		Gui.jf.dispose();
+		System.exit(0);
 	}
 }

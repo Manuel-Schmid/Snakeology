@@ -16,9 +16,7 @@ public class GameClock extends Thread{
 	public static boolean boniOn = false;
 	public static int bonusTimer = 40;
 	
-	public GameClock() {
-		
-	}
+	public GameClock() {}
 	
 	public void run() {
 		if (difficulty == "easy") {	extraLife = true; } else { extraLife = false; }
@@ -31,15 +29,16 @@ public class GameClock extends Thread{
 					bonusTimer = 40;
 				}
 				if (extraLife == true) { Draw.lblHeart.setVisible(true); } else { Draw.lblHeart.setVisible(false); }
+				
 				// Tick Management
 				if (Collision.activeBonus == "slowdown" && bonusTimer > 0) {
-					sleep(275);
-					bonusTimer -= 2;
+					sleep(250);
+					bonusTimer--;
 				} else if (Collision.activeBonus == "speedup" && bonusTimer > 0){
 					sleep(140);
 					bonusTimer--;
 				} else if (difficulty == "easy") {
-					sleep(250);
+					sleep(225);
 				} else if (difficulty == "normal") {
 					if (Snake.score < 10) { // Schlange wird mit höherer Punktzahl schneller
 						sleep(185);
@@ -64,10 +63,9 @@ public class GameClock extends Thread{
 					}
 				}
 				
-				if (Collision.activeBonus == "extraLife" || Collision.activeBonus == "speedup" || Collision.activeBonus == "teleporter") {
+				if (Collision.activeBonus == "extraLife" || Collision.activeBonus == "double") {
 					bonusTimer--;
 				}
-				System.out.println(bonusTimer);
 				Snake.move();
 				Snake.waitToMove = false;
 				Collision.collidePickUp();

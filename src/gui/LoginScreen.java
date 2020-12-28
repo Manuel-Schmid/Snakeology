@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 
 public class LoginScreen extends JDialog {
@@ -79,36 +80,39 @@ public class LoginScreen extends JDialog {
 		JButton okButton = new JButton("OK");
 		
 		// Create and Fill User File
-		FileWriter fw = new FileWriter("currentUser.txt", false);
-		BufferedWriter userWriter = new BufferedWriter(fw);
+		FileWriter fwCrntUser = new FileWriter("currentUser.txt", false);
+		BufferedWriter userWriter = new BufferedWriter(fwCrntUser);
 		// Create Other Files
-		FileWriter fw1 = new FileWriter("recordUser.txt", true);
-		BufferedWriter fileWriter1 = new BufferedWriter(fw1);
-		FileWriter fw2 = new FileWriter("recordUserScore.txt", true);
-		BufferedWriter fileWriter2 = new BufferedWriter(fw2);
+		FileWriter fwRecord = new FileWriter("record.txt", true);
+		BufferedWriter recordWriter = new BufferedWriter(fwRecord);
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (GameClock.difficulty != "easy" && GameClock.difficulty != "normal" && GameClock.difficulty != "hard") {
-					GameClock.difficulty = "normal";
-				}
-				try {
-					// Username in BufferedReader speichern
-					userWriter.write(tfUsername.getText());
-					userWriter.flush(); // daten übertragen
+				if (tfUsername.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null,"Please enter a valid Username.","invalid username",JOptionPane.WARNING_MESSAGE);
 					tfUsername.setText("");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} else {
+					if (GameClock.difficulty != "easy" && GameClock.difficulty != "normal" && GameClock.difficulty != "hard") {
+						GameClock.difficulty = "normal";
+					}
+					try {
+						// Username in BufferedReader speichern
+						userWriter.write(tfUsername.getText());
+						userWriter.flush(); // daten übertragen
+						tfUsername.setText("");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Gui g = new Gui();
+					GameClock gc = new GameClock();
+					g.create();
+					gc.start(); // Methode aus Thread
+					if (checkBoniOn.isSelected()) {
+						GameClock.boniOn = true;
+					} else {GameClock.boniOn = false;}
+					dispose();
 				}
-				Gui g = new Gui();
-				GameClock gc = new GameClock();
-				g.create();
-				gc.start(); // Methode aus Thread
-				if (checkBoniOn.isSelected()) {
-					GameClock.boniOn = true;
-				} else {GameClock.boniOn = false;}
-				dispose();
 			}
 		});
 		

@@ -22,9 +22,12 @@ public class Obstacle {
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
 			}
-		}
-		if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
-			this.reset();
+			if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
+				this.reset();
+			}
+			/*if(x == Snake.bonus.getX() && y == Snake.bonus.getY()) {
+				this.reset();
+			}*/
 		}
 	}
 	
@@ -41,9 +44,12 @@ public class Obstacle {
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
 			}
-		}
-		if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
-			this.reset();
+			if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
+				this.reset();
+			}
+			if(x == Snake.bonus.getX() && y == Snake.bonus.getY()) {
+				this.reset();
+			}
 		}
 	}
 

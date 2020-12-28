@@ -15,7 +15,7 @@ import gui.Draw;
 
 public class Collision {
 	
-	public static String activeBonus;
+	public static String activeBonus = "";
 	
 	public static void collideSelf() throws IOException {
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
@@ -76,13 +76,26 @@ public class Collision {
 		if(Snake.head.getX() == Snake.pickup.getX() && Snake.head.getY() == Snake.pickup.getY()) {
 			// Score erhöhen
 			if (PickUp.isGolden) {
-				Snake.score += 3;
-				Snake.addTail();
-				Snake.addTail();
-				Snake.addTail();
+				if (Collision.activeBonus == "double") {
+					Snake.score += 6;
+					for (int i = 0; i < 6; i++) {
+						Snake.addTail();
+					}
+				} else {
+					Snake.score += 3;
+					for (int i = 0; i < 3; i++) {
+						Snake.addTail();
+					}
+				}
 			} else {
-				Snake.score += 1;
-				Snake.addTail();
+				if (Collision.activeBonus == "double") {
+					Snake.score += 2;
+					Snake.addTail();
+					Snake.addTail();
+				} else {
+					Snake.score += 1;
+					Snake.addTail();
+				}
 			}
 			if (Snake.score > Snake.bestscore) {
 				Snake.bestscore = Snake.score;
@@ -100,7 +113,7 @@ public class Collision {
 				Snake.score = 0;
 			}
 			Snake.obstacle.reset();
-			Snake.removeTail();
+			Snake.removeTail(1);
 		}
 	}
 	
@@ -108,6 +121,7 @@ public class Collision {
 		if(Obstacle.isBlack == true && Snake.head.getX() == Snake.obstacle.getX() && Snake.head.getY() == Snake.obstacle.getY()) {
 			if (GameClock.extraLife == true) {
 				GameClock.extraLife = false;
+				Snake.obstacle.reset();
 			} else {
 				Snake.head.setX(7);
 				Snake.head.setY(7);
@@ -126,14 +140,13 @@ public class Collision {
 			Snake.bonus.setY(-5);
 			GameClock.bonusTimer = 40;
 			activeBonus = Bonus.bonus;
-			System.out.println(activeBonus);
-			if (activeBonus == "extraLife") {
+			if (activeBonus == "slowdown") {
+				GameClock.bonusTimer = 25;
+			}
+			else if (activeBonus == "extraLife") {
 				GameClock.extraLife = true;
 			} else if (activeBonus == "speedup") {
 				GameClock.bonusTimer = 60;
-			} else if (activeBonus == "teleporter") {
-				Snake.head.setX(ThreadLocalRandom.current().nextInt(0,15));
-				Snake.head.setY(ThreadLocalRandom.current().nextInt(0,15));
 			}
 		}
 	}

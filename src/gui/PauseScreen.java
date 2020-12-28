@@ -12,6 +12,7 @@ import clocks.GameClock;
 import game.Snake;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -73,6 +74,12 @@ public class PauseScreen extends JDialog {
 				dispose();
 			}
 		});
+	}
+	
+	// Close whole Game on Window Close
+	public void windowClosing(WindowEvent e) {
+		Gui.jf.dispose();
+		System.exit(0);
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Bonus {
 	int x;
 	int y;
-	public static String bonus = ""; // (slowdown, extraLife, speedup, teleporter)
+	public static String bonus = ""; // (slowdown, extraLife, speedup, double)
 	
 	public Bonus() {
 		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Boni
@@ -15,12 +15,12 @@ public class Bonus {
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
 			}
-		}
-		if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
-			this.reset();
-		}
-		if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
-			this.reset();
+			if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
+				this.reset();
+			}
+			if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
+				this.reset();
+			}
 		}
 		int randomNum = ThreadLocalRandom.current().nextInt(1, 12 + 1); // Zufallszahl von 1-10
 		if (randomNum <= 3) {
@@ -30,7 +30,7 @@ public class Bonus {
 		} else if (randomNum <= 9) {
 			bonus = "speedup";
 		} else if (randomNum <= 12) {
-			bonus = "teleporter";
+			bonus = "double";
 		}
 	}
 	
@@ -42,12 +42,12 @@ public class Bonus {
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
 			}
-		}
-		if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
-			this.reset();
-		}
-		if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
-			this.reset();
+			if(x == Snake.pickup.getX() && y == Snake.pickup.getY()) {
+				this.reset();
+			}
+			if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
+				this.reset();
+			}
 		}
 		int randomNum = ThreadLocalRandom.current().nextInt(1, 12 + 1); // Zufallszahl von 1-10
 		if (randomNum <= 3) {
@@ -57,7 +57,7 @@ public class Bonus {
 		} else if (randomNum <= 9) {
 			bonus = "speedup";
 		} else if (randomNum <= 12) {
-			bonus = "teleporter";
+			bonus = "double";
 		}
 	}
 

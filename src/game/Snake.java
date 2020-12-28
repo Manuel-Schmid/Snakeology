@@ -31,13 +31,15 @@ public class Snake {
 			tails.add(new Tail(tails.get(tails.size()-1).x, tails.get(tails.size()-1).y));
 		}
 		if (tails.size() % 5 == 0) {
-			obstacle = new Obstacle();
+			obstacle.reset();
 		}
 	}
 	
-	public static void removeTail() { // Entfernt ein Tail von der Schlange
-		if(tails.size() > 0) {
-			tails.remove(tails.size() - 1);
+	public static void removeTail(int c) { // Entfernt ein Tail von der Schlange
+		for (int i = 0; i < c; i++) {
+			if(tails.size() > 0) {
+				tails.remove(tails.size() - 1);
+			}
 		}
 	}
 	
