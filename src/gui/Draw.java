@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 
 import actions.Collision;
 import clocks.GameClock;
@@ -28,6 +30,7 @@ public class Draw extends JLabel{
 	private String recDifficulty;
 	private String record;
 	public static JLabel lblHeart = new JLabel("");
+	public static JProgressBar b = new JProgressBar();
 	String splitter = ";";
 	
 	protected void paintComponent(Graphics g) {
@@ -131,9 +134,9 @@ public class Draw extends JLabel{
 		// Draw Bonus
 		if (GameClock.boniOn) {
 			 if (Bonus.bonus == "slowdown") {
-				 g.setColor(new Color(242, 255, 0));
+				 g.setColor(new Color(57, 196, 182));
 			 } else if (Bonus.bonus == "extraLife") {
-				 g.setColor(new Color(125, 125, 0));
+				 g.setColor(new Color(125, 123, 2));
 			 } else if (Bonus.bonus == "speedup") {
 				 g.setColor(new Color(0, 0, 204));
 			 } else if (Bonus.bonus == "double") {
@@ -142,7 +145,7 @@ public class Draw extends JLabel{
 			 p = Snake.ptc(Snake.bonus.getX(), Snake.bonus.getY());
 			 g.fillRect(p.x,  p.y, 32,  32);
 		}
-		
+				
 		// Draw Grid
 		g.setColor(Color.GRAY);
 		for(int x = 0; x < 16; x++) {
@@ -159,12 +162,7 @@ public class Draw extends JLabel{
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.drawString("Score: " + Snake.score,  130, 37);
 		g.drawString("Your best: " + Snake.bestscore,  760,  37);
-		
-		// Draw Bonus Timer
-		if (Collision.activeBonus != "") {
-			g.drawString(String.valueOf(GameClock.bonusTimer), 130,  90);
-		}
-		
+				
 		// Record
 		g.drawString("All-time record",  760,  165);
 		g.setFont(new Font("Arial", Font.BOLD, 17));
@@ -172,6 +170,46 @@ public class Draw extends JLabel{
 		g.drawString("Difficulty: " + recDifficulty,  760,  210);
 		g.drawString("Score: " + recScore,  760,  230);
 		
+		// Draw Boni ProgressBar
+		b.setOrientation(SwingConstants.VERTICAL);
+		b.setMinimum(0);
+		b.setMaximum(100);
+		b.setBackground( new Color(0, 0, 0, 0));
+		b.setBounds(760, 370, 80, 163);
+		b.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.GRAY));
+		this.add(b);        
+		
+		// Draw Boni Legend
+		if (GameClock.boniOn) {
+			g.drawString("Slowdown",  108,  389);
+			g.drawString("Speedup",  108,  419);
+			g.drawString("Double Points",  108,  449);
+			g.drawString("Extra Life",  108,  479);
+		
+			JLabel lblSlowdown = new JLabel("");
+			lblSlowdown.setBounds(75, 370, 25, 25);
+			lblSlowdown.setBackground(new Color(57, 196, 182));
+			lblSlowdown.setOpaque(true);
+			this.add(lblSlowdown);
+			
+			JLabel lblSpeedup = new JLabel("");
+			lblSpeedup.setBounds(75, 400, 25, 25);
+			lblSpeedup.setBackground(new Color(0, 0, 204));
+			lblSpeedup.setOpaque(true);
+			this.add(lblSpeedup);
+			
+			JLabel lblDouble = new JLabel("");
+			lblDouble.setBounds(75, 430, 25, 25);
+			lblDouble.setBackground(new Color(204, 0, 255));
+			lblDouble.setOpaque(true);
+			this.add(lblDouble);
+			
+			JLabel lblExtraLife = new JLabel("");
+			lblExtraLife.setBounds(75, 460, 25, 25);
+			lblExtraLife.setBackground(new Color(125, 123, 2));
+			lblExtraLife.setOpaque(true);
+			this.add(lblExtraLife);
+		}
 		repaint();		
 	}
 	

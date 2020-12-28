@@ -1,5 +1,6 @@
 package actions;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -142,12 +143,17 @@ public class Collision {
 			activeBonus = Bonus.bonus;
 			if (activeBonus == "slowdown") {
 				GameClock.bonusTimer = 25;
+				Draw.b.setForeground(new Color(57, 196, 182));
 			}
 			else if (activeBonus == "extraLife") {
 				GameClock.extraLife = true;
+				Draw.b.setForeground(new Color(125, 123, 2));
 			} else if (activeBonus == "speedup") {
 				GameClock.bonusTimer = 60;
-			}
+				Draw.b.setForeground(new Color(0, 0, 204));
+			} else if (activeBonus == "double") {
+				Draw.b.setForeground(new Color(204, 0, 255));
+			} 
 		}
 	}
 }

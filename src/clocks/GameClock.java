@@ -29,16 +29,18 @@ public class GameClock extends Thread{
 					bonusTimer = 40;
 				}
 				if (extraLife == true) { Draw.lblHeart.setVisible(true); } else { Draw.lblHeart.setVisible(false); }
-				
+				if (Collision.activeBonus != "") { Draw.b.setVisible(true); } else { Draw.b.setVisible(false); }
 				// Tick Management
 				if (Collision.activeBonus == "slowdown" && bonusTimer > 0) {
-					sleep(250);
+					sleep(230);
 					bonusTimer--;
+					Draw.b.setValue((int) (4 * bonusTimer)); // ProgressBar
 				} else if (Collision.activeBonus == "speedup" && bonusTimer > 0){
 					sleep(140);
 					bonusTimer--;
+					Draw.b.setValue((int) (1.666666 * bonusTimer)); // ProgressBar
 				} else if (difficulty == "easy") {
-					sleep(225);
+					sleep(215);
 				} else if (difficulty == "normal") {
 					if (Snake.score < 10) { // Schlange wird mit höherer Punktzahl schneller
 						sleep(185);
@@ -65,6 +67,7 @@ public class GameClock extends Thread{
 				
 				if (Collision.activeBonus == "extraLife" || Collision.activeBonus == "double") {
 					bonusTimer--;
+					Draw.b.setValue((int) (2.5 * bonusTimer)); // ProgressBar
 				}
 				Snake.move();
 				Snake.waitToMove = false;

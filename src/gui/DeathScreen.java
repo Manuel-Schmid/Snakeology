@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -25,11 +26,14 @@ import game.PickUp;
 import game.Snake;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
+import javax.swing.JProgressBar;
+import javax.swing.border.MatteBorder;
 
 public class DeathScreen extends JDialog { // JDialog
 
@@ -154,6 +158,7 @@ public class DeathScreen extends JDialog { // JDialog
 		JCheckBox checkBoniOn = new JCheckBox("Boni");
 		checkBoniOn.setBounds(296, 147, 59, 23);
 		contentPanel.add(checkBoniOn);
+		
 		if (GameClock.boniOn) {
 			checkBoniOn.setSelected(true);
 		} else { 
@@ -251,11 +256,11 @@ public class DeathScreen extends JDialog { // JDialog
 			}
 		});
 		
-	}
-	
-	// Close whole Game on Window Close
-	public void windowClosing(WindowEvent e) {
-		Gui.jf.dispose();
-		System.exit(0);
+		// Close whole Game on Window Close
+		this.addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	    		Gui.jf.dispose();
+	        }
+	    });
 	}
 }
