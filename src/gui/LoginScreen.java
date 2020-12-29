@@ -34,6 +34,7 @@ public class LoginScreen extends JDialog {
 	 * @throws IOException 
 	 */
 	public LoginScreen() throws IOException {
+		setTitle("Snakeology - Login");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

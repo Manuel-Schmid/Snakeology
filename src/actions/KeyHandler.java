@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import clocks.GameClock;
 import game.Dir;
 import game.Snake;
+import gui.ManualScreenBasics;
+import gui.ManualScreenDifficulties;
 import gui.PauseScreen;
 
 public class KeyHandler implements KeyListener{
@@ -70,6 +72,7 @@ public class KeyHandler implements KeyListener{
 				Snake.waitToMove = true;
 			}
 			break;
+		
 		// PauseScreen
 		case KeyEvent.VK_ESCAPE: 
 			if(GameClock.running == true) {
@@ -77,7 +80,6 @@ public class KeyHandler implements KeyListener{
 				PauseScreen pauseS = new PauseScreen();
 				pauseS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				pauseS.setVisible(true);
-
 			}
 			break;
 		case KeyEvent.VK_SPACE: 
@@ -86,9 +88,18 @@ public class KeyHandler implements KeyListener{
 				PauseScreen pauseS = new PauseScreen();
 				pauseS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				pauseS.setVisible(true);
-
 			}
 			break;
+			
+		// ManualScreen
+		case KeyEvent.VK_M: 
+			if(GameClock.running == true) {
+				GameClock.running = false;
+				ManualScreenBasics ManualBS = new ManualScreenBasics();
+				ManualBS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				ManualBS.setVisible(true);
+			}
+			break;	
 		}
 	}
 

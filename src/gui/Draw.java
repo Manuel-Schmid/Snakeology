@@ -177,35 +177,39 @@ public class Draw extends JLabel{
 		b.setBackground( new Color(0, 0, 0, 0));
 		b.setBounds(760, 370, 80, 163);
 		b.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.GRAY));
-		this.add(b);        
+		this.add(b);
+		
+		// Draw Hotkeys
+		g.drawString("(m) Manual",  70,  495);
+		g.drawString("(space) Pause Game",  38,  520);
 		
 		// Draw Boni Legend
 		if (GameClock.boniOn) {
-			g.drawString("Slowdown",  108,  389);
-			g.drawString("Speedup",  108,  419);
-			g.drawString("Double Points",  108,  449);
-			g.drawString("Extra Life",  108,  479);
+			g.drawString("Slowdown",  103,  359);
+			g.drawString("Speedup",  103,  389);
+			g.drawString("Double Points",  103,  419);
+			g.drawString("Extra Life",  103,  449);
 		
 			JLabel lblSlowdown = new JLabel("");
-			lblSlowdown.setBounds(75, 370, 25, 25);
+			lblSlowdown.setBounds(70, 340, 25, 25);
 			lblSlowdown.setBackground(new Color(57, 196, 182));
 			lblSlowdown.setOpaque(true);
 			this.add(lblSlowdown);
 			
 			JLabel lblSpeedup = new JLabel("");
-			lblSpeedup.setBounds(75, 400, 25, 25);
+			lblSpeedup.setBounds(70, 370, 25, 25);
 			lblSpeedup.setBackground(new Color(0, 0, 204));
 			lblSpeedup.setOpaque(true);
 			this.add(lblSpeedup);
 			
 			JLabel lblDouble = new JLabel("");
-			lblDouble.setBounds(75, 430, 25, 25);
+			lblDouble.setBounds(70, 400, 25, 25);
 			lblDouble.setBackground(new Color(204, 0, 255));
 			lblDouble.setOpaque(true);
 			this.add(lblDouble);
 			
 			JLabel lblExtraLife = new JLabel("");
-			lblExtraLife.setBounds(75, 460, 25, 25);
+			lblExtraLife.setBounds(70, 430, 25, 25);
 			lblExtraLife.setBackground(new Color(125, 123, 2));
 			lblExtraLife.setOpaque(true);
 			this.add(lblExtraLife);

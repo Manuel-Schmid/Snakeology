@@ -33,6 +33,7 @@ public class PauseScreen extends JDialog {
 	 * Create the dialog.
 	 */
 	public PauseScreen() {
+		setTitle("Snakeology - paused");
 
 		Gui.jf.setEnabled(false);
 		

@@ -52,6 +52,7 @@ public class DeathScreen extends JDialog { // JDialog
 	 * @throws IOException 
 	 */
 	public DeathScreen() throws IOException {
+		setTitle("Snakeology - You died");
 				
 		Gui.jf.setEnabled(false);
 				

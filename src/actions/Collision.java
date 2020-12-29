@@ -141,6 +141,7 @@ public class Collision {
 			Snake.bonus.setY(-5);
 			GameClock.bonusTimer = 40;
 			activeBonus = Bonus.bonus;
+			Draw.b.setValue(100);
 			if (activeBonus == "slowdown") {
 				GameClock.bonusTimer = 25;
 				Draw.b.setForeground(new Color(57, 196, 182));
