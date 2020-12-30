@@ -29,21 +29,18 @@ public class ManualScreenDifficulties extends JDialog {
 	 */
 	public ManualScreenDifficulties() {
 		
-		Gui.jf.setEnabled(false);
-		
+		if (LoginScreen.loginManual == false) {
+			Gui.jf.setEnabled(false);
+		} 
+				
 		setTitle("Snakeology - Manual");
 		setBounds(100, 100, 663, 410);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		JButton btnContinue = new JButton("Continue Game");
-
-		btnContinue.setActionCommand("OK");
-		btnContinue.setBounds(505, 331, 134, 31);
-		contentPanel.add(btnContinue);
-		
+		setLocationRelativeTo(null);
+				
 		JLabel lblManual = new JLabel("Manual");
 		lblManual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblManual.setForeground(Color.BLACK);
@@ -133,7 +130,24 @@ public class ManualScreenDifficulties extends JDialog {
 		btnBack.setActionCommand("OK");
 		btnBack.setBounds(383, 331, 112, 31);
 		contentPanel.add(btnBack);
-		setLocationRelativeTo(null);
+		
+		JButton btnClose = new JButton("Close Manual");
+		btnClose.setActionCommand("OK");
+		btnClose.setBounds(505, 331, 134, 31);
+		contentPanel.add(btnClose);
+		
+		JButton btnContinue = new JButton("Continue Game");
+		btnContinue.setActionCommand("OK");
+		btnContinue.setBounds(505, 331, 134, 31);
+		contentPanel.add(btnContinue);
+		
+		if (LoginScreen.loginManual) {
+			btnClose.setVisible(true);
+			btnContinue.setVisible(false);
+		} else {
+			btnClose.setVisible(false);
+			btnContinue.setVisible(true);
+		}
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,10 +170,20 @@ public class ManualScreenDifficulties extends JDialog {
 			}
 		});
 		
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginScreen.loginManual = false;
+				dispose();
+			}
+		});
+		
 		// Close whole Game on Window Close
 		this.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	    		Gui.jf.dispose();
+	    		if (LoginScreen.loginManual == false) {
+		    		Gui.jf.dispose();
+	    		}
+				LoginScreen.loginManual = false;
 	        }
 	    });
 	}

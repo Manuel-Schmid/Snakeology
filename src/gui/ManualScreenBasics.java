@@ -25,7 +25,9 @@ public class ManualScreenBasics extends JDialog {
 	 */
 	public ManualScreenBasics() {
 		
-		Gui.jf.setEnabled(false);
+		if (LoginScreen.loginManual == false) {
+			Gui.jf.setEnabled(false);
+		}
 		
 		setTitle("Snakeology - Manual");
 		setBounds(100, 100, 663, 410);
@@ -152,7 +154,9 @@ public class ManualScreenBasics extends JDialog {
 		// Close whole Game on Window Close
 		this.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	    		Gui.jf.dispose();
+	    		if (LoginScreen.loginManual == false) {
+		    		Gui.jf.dispose();
+	    		}
 	        }
 	    });
 	}

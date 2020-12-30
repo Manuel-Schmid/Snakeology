@@ -28,6 +28,7 @@ public class LoginScreen extends JDialog {
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfUsername;
+	public static boolean loginManual = false;
 		
 	/**
 	 * Create the dialog.
@@ -73,12 +74,21 @@ public class LoginScreen extends JDialog {
 		JCheckBox checkBoniOn = new JCheckBox("Boni");
 		checkBoniOn.setBounds(268, 132, 59, 23);
 		contentPanel.add(checkBoniOn);
-						
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		
+		JButton btnManual = new JButton("Manual");
+
+		btnManual.setBounds(8, 231, 78, 23);
+		contentPanel.add(btnManual);
 		
 		JButton okButton = new JButton("OK");
+		okButton.setActionCommand("OK");
+		okButton.setBounds(292, 231, 53, 23);
+		contentPanel.add(okButton);
+		
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setActionCommand("Cancel");
+		cancelButton.setBounds(350, 231, 77, 23);
+		contentPanel.add(cancelButton);
 		
 		// Create and Fill User File
 		FileWriter fwCrntUser = new FileWriter("currentUser.txt", false);
@@ -118,10 +128,8 @@ public class LoginScreen extends JDialog {
 		});
 		
 		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		
-		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -129,7 +137,15 @@ public class LoginScreen extends JDialog {
 		});
 		
 		cancelButton.setActionCommand("Cancel");
-		buttonPane.add(cancelButton);
+		
+		btnManual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginManual = true;
+				ManualScreenBasics ManualBS = new ManualScreenBasics();
+				ManualBS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				ManualBS.setVisible(true);
+			}
+		});
 		
 		btnEasy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
