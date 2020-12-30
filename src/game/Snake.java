@@ -1,41 +1,44 @@
+/**
+ * @author Manuel & Sven
+ */
+
 package game;
 
 import java.awt.Point;
 import java.util.ArrayList;
 
-import clocks.GameClock;
 import gui.Gui;
 
 public class Snake {
 	
-	public static int score = 0;
+	public static int score = 0; // Aktueller Punktestand
 	
-	public static int bestscore = 0;
+	public static int bestscore = 0; // Beste erreichte Punktzahl
 	
-	public static boolean waitToMove = false; // Wartezeit zwischen klick und Bewegung
+	public static boolean waitToMove = false; // Wartezeit zwischen Tastendruck und Bewegung
 	
 	public static Head head = new Head(7, 7); // Startposition etwa in Mitte
 	
-	public static ArrayList<Tail> tails = new ArrayList<Tail>();
+	public static ArrayList<Tail> tails = new ArrayList<Tail>(); // Liste der Tails (Schwänze) der Schlange
 	
-	public static PickUp pickup = new PickUp();	
+	public static PickUp pickup = new PickUp();	 // erster Apfel wird erstellt
 	
-	public static Obstacle obstacle = new Obstacle();
+	public static Obstacle obstacle = new Obstacle(); // erstes Hinderniss wird erstellt
 	
-	public static Bonus bonus = new Bonus();
+	public static Bonus bonus = new Bonus(); // erster Bonus wird erstellt
 	
-	public static void addTail() { // Fügt Immer Head und dann Tails ein
-		if(tails.size() < 1) {
+	public static void addTail() { // Fügt ein neues Tail hinzu
+		if(tails.size() < 1) { // Fügt, wenn es noch kein Tail hat, ein neues an der alten Position des Kopfes ein.
 			tails.add(new Tail(head.getX(), head.getY()));
-		} else {
+		} else { // Fügt ein neues Tail an der alten Position des letzten Tails ein
 			tails.add(new Tail(tails.get(tails.size()-1).x, tails.get(tails.size()-1).y));
 		}
-		if (tails.size() % 5 == 0) {
+		if (tails.size() % 5 == 0) { // Immer wenn die Punktzahl durch fünf Teilbar ist werden Hindernisse zurückgesetzt.
 			obstacle.reset();
 		}
 	}
 	
-	public static void removeTail(int c) { // Entfernt ein Tail von der Schlange
+	public static void removeTail(int c) { // Entfernt eine bestimmte Anzahl Tails von der Schlange
 		for (int i = 0; i < c; i++) {
 			if(tails.size() > 0) {
 				tails.remove(tails.size() - 1);
@@ -44,7 +47,6 @@ public class Snake {
 	}
 	
 	public static void move() {
-		
 		// Move Tails
 		if(tails.size() >= 2) {
 			for(int i = tails.size()-1; i>=1; i--) {
@@ -69,16 +71,16 @@ public class Snake {
 		
 		// Move Head
 		switch(head.getDir()) {
-			case RIGHT: 			// Wenn die Schlange nach rechts geht geht der Kopf auf der X-Achse 1 nach rechts
+			case RIGHT: 		// Wenn die Schlange nach rechts geht geht der Kopf auf der X-Achse 1 nach rechts, unten jeweils das gleiche Prinzip
 				head.setX(head.getX() + 1); 
 				break;
-			case UP: 			// Wenn die Schlange nach rechts geht geht der Kopf auf der X-Achse 1 nach rechts
+			case UP: 			
 				head.setY(head.getY() - 1); 
 				break;
-			case LEFT: 			// Wenn die Schlange nach rechts geht geht der Kopf auf der X-Achse 1 nach rechts
+			case LEFT: 			
 				head.setX(head.getX() - 1); 
 				break;
-			case DOWN: 			// Wenn die Schlange nach rechts geht geht der Kopf auf der X-Achse 1 nach rechts
+			case DOWN: 			
 				head.setY(head.getY() + 1); 
 				break;
 		}
@@ -86,7 +88,7 @@ public class Snake {
 	}
 	
 	// Position zu den Koordinaten
-	public static Point ptc(int x, int y) {
+	public static Point ptc(int x, int y) { // erstellt ein neues Punkt-Objekt mit den Koordinaten x und y
 		Point p = new Point(0, 0);
 		p.x = x * 32 + Gui.xoff;
 		p.y = y * 32 + Gui.yoff;

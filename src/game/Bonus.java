@@ -1,16 +1,20 @@
+/**
+ * @author Manuel
+ */
+
 package game;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Bonus {
+public class Bonus { // Diese Klasse erstellt ein Bonus-Objekt
 	int x;
 	int y;
-	public static String bonus = ""; // (slowdown, extraLife, speedup, double)
+	public static String bonus = ""; // Hier wird der Bonus gespeichert (slowdown, extraLife, speedup oder double)
 	
 	public Bonus() {
-		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Boni
+		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Boni für X und Y Achse
 		this.setY(ThreadLocalRandom.current().nextInt(0,15));
-		// Hier soll verhindert werden, dass ein Bonus in einem Tail spawnt
+		// Hier soll verhindert werden, dass ein Bonus in einem Tail, PickUp oder Hindernis spawnt
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
@@ -23,7 +27,7 @@ public class Bonus {
 			}
 		}
 		int randomNum = ThreadLocalRandom.current().nextInt(1, 12 + 1); // Zufallszahl von 1-10
-		if (randomNum <= 3) {
+		if (randomNum <= 3) { // Je nachdem in welchem Bereich die Zufallszahl liegt wird ein Bonus festgelegt
 			bonus = "slowdown";
 		} else if (randomNum <= 6) {
 			bonus = "extraLife";
@@ -35,9 +39,9 @@ public class Bonus {
 	}
 	
 	public void reset() {
-		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Boni
+		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Boni für X und Y Achse
 		this.setY(ThreadLocalRandom.current().nextInt(0,15));
-		// Hier soll verhindert werden, dass ein Bonus in einem Tail spawnt
+		// Hier soll verhindert werden, dass ein Bonus in einem Tail, PickUp oder Hindernis spawnt
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();
@@ -50,7 +54,7 @@ public class Bonus {
 			}
 		}
 		int randomNum = ThreadLocalRandom.current().nextInt(1, 12 + 1); // Zufallszahl von 1-10
-		if (randomNum <= 3) {
+		if (randomNum <= 3) { // Je nachdem in welchem Bereich die Zufallszahl liegt wird ein Bonus festgelegt
 			bonus = "slowdown";
 		} else if (randomNum <= 6) {
 			bonus = "extraLife";

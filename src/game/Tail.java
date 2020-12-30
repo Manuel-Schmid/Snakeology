@@ -1,10 +1,15 @@
+/**
+ * @author Sven
+ */
+
 package game;
 
-public class Tail {
+public class Tail { // erstellt ein neues Tail-Objekt
 	
+	// Koordinaten
 	int x;
 	int y;
-	boolean wait = true; 
+	boolean wait = true; // Warten auf Bewegung
 	
 	public Tail(int x, int y) {
 		this.setX(x);
@@ -14,7 +19,7 @@ public class Tail {
 	public int getX() {
 		return x;
 	}
-
+	
 	public void setX(int x) {
 		this.x = x;
 	}

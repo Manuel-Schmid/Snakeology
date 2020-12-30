@@ -1,22 +1,21 @@
+/**
+ * @author Manuel & Sven
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import actions.Main;
 import clocks.GameClock;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -24,16 +23,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 
-public class LoginScreen extends JDialog {
+public class LoginScreen extends JDialog { // Dieser JDialog ermöglicht die Auswahl einer Schwierigkeitsstufe, die Aktivierung von Boni und die Eingabe eines Benutzernamens
+	private static final long serialVersionUID = 1L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private JTextField tfUsername;
-	public static boolean loginManual = false;
+	private JTextField tfUsername; // textField für die Eingabe des Usernames
+	public static boolean loginManual = false; // Wurde das Manual über den Login-Screen gestartet?
 		
-	/**
-	 * Create the dialog.
-	 * @throws IOException 
-	 */
+	@SuppressWarnings({ "resource", "unused" })
 	public LoginScreen() throws IOException {
 		setTitle("Snakeology - Login");
 		setBounds(100, 100, 450, 300);
@@ -43,7 +40,7 @@ public class LoginScreen extends JDialog {
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		tfUsername = new JTextField();
+		tfUsername = new JTextField(); // In dieses Feld kann der Benutzername eingetragen werden
 		tfUsername.setBounds(108, 130, 151, 26);
 		contentPanel.add(tfUsername);
 		tfUsername.setColumns(10);
@@ -90,19 +87,19 @@ public class LoginScreen extends JDialog {
 		cancelButton.setBounds(350, 231, 77, 23);
 		contentPanel.add(cancelButton);
 		
-		// Create and Fill User File
+		// Erstellt, falls nicht schon vorhanden, eine neue Textdatei "currentUser"
 		FileWriter fwCrntUser = new FileWriter("currentUser.txt", false);
 		BufferedWriter userWriter = new BufferedWriter(fwCrntUser);
-		// Create Other Files
+		// Erstellt, falls nicht schon vorhanden, eine neue Textdatei "record"
 		FileWriter fwRecord = new FileWriter("record.txt", true);
 		BufferedWriter recordWriter = new BufferedWriter(fwRecord);
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (tfUsername.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null,"Please enter a valid Username.","invalid username",JOptionPane.WARNING_MESSAGE);
+				if (tfUsername.getText().isEmpty()) { // Wenn kein Benutzername eingegeben wird, erscheint eine Fehlermeldung
+					JOptionPane.showMessageDialog(null,"Please enter a valid Username.","Invalid username",JOptionPane.WARNING_MESSAGE);
 					tfUsername.setText("");
-				} else {
+				} else { // Standardschwierigkeitsstufe ist "normal", wenn keine ausgewählt wurde
 					if (GameClock.difficulty != "easy" && GameClock.difficulty != "normal" && GameClock.difficulty != "hard") {
 						GameClock.difficulty = "normal";
 					}
@@ -112,7 +109,6 @@ public class LoginScreen extends JDialog {
 						userWriter.flush(); // daten übertragen
 						tfUsername.setText("");
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					Gui g = new Gui();
@@ -132,14 +128,14 @@ public class LoginScreen extends JDialog {
 		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				dispose(); // Schliest das Fenster
 			}
 		});
 		
 		cancelButton.setActionCommand("Cancel");
 		
 		btnManual.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Öffnet die Bedienungsanleitung
 				loginManual = true;
 				ManualScreenBasics ManualBS = new ManualScreenBasics();
 				ManualBS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -148,7 +144,7 @@ public class LoginScreen extends JDialog {
 		});
 		
 		btnEasy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Toggle Button easy
 				GameClock.difficulty = "easy";
 				btnEasy.setEnabled(false);
 				btnNormal.setEnabled(true);
@@ -157,7 +153,7 @@ public class LoginScreen extends JDialog {
 		});
 		
 		btnNormal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Toggle Button normal
 				GameClock.difficulty = "normal";
 				btnEasy.setEnabled(true);
 				btnNormal.setEnabled(false);
@@ -166,7 +162,7 @@ public class LoginScreen extends JDialog {
 		});
 		
 		btnHard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) { // Toggle Button hard
 				GameClock.difficulty = "hard";
 				btnEasy.setEnabled(true);
 				btnNormal.setEnabled(true);

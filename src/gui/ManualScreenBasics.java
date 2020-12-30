@@ -1,8 +1,11 @@
+/**
+ * @author Sven
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class ManualScreenBasics extends JDialog {
-
+public class ManualScreenBasics extends JDialog { // Dieser JDialog ist die erste von zwei Seiten der Bedienungsanleitung und dient nur zur Darstellung von Information, hat also keine mathematische Funktion
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 
-	/**
-	 * Create the dialog.
-	 */
 	public ManualScreenBasics() {
 		
 		if (LoginScreen.loginManual == false) {
@@ -143,11 +144,11 @@ public class ManualScreenBasics extends JDialog {
 		setLocationRelativeTo(null);
 		
 		btnNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Leitet weiter auf Seite zwei der Bedienungsanleitung
 				ManualScreenDifficulties manualDS = new ManualScreenDifficulties();
 				manualDS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				manualDS.setVisible(true);
-				dispose();
+				dispose(); // Schliesst das Fenster
 			}
 		});
 		
@@ -155,7 +156,7 @@ public class ManualScreenBasics extends JDialog {
 		this.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
 	    		if (LoginScreen.loginManual == false) {
-		    		Gui.jf.dispose();
+		    		Gui.jf.dispose(); // Schliesst das ganze Spiel falls es bereits offen ist
 	    		}
 	        }
 	    });

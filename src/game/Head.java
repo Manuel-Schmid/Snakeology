@@ -1,7 +1,11 @@
+/**
+ * @author Sven
+ */
+
 package game;
 
 public class Head {
-	Dir dir = Dir.RIGHT;
+	Dir dir = Dir.RIGHT; // Standardmässig bewegt sich die Schlange nach rechts
 	int x;
 	int y;
 	

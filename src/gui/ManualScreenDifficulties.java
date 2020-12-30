@@ -1,7 +1,10 @@
+/**
+ * @author Sven
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,13 +23,11 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class ManualScreenDifficulties extends JDialog {
-
+public class ManualScreenDifficulties extends JDialog { // Dieser JDialog ist die zweite von zwei Seiten der Bedienungsanleitung und dient nur zur Darstellung von Information, hat also keine mathematische Funktion
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 
-	/**
-	 * Create the dialog.
-	 */
 	public ManualScreenDifficulties() {
 		
 		if (LoginScreen.loginManual == false) {
@@ -141,7 +142,7 @@ public class ManualScreenDifficulties extends JDialog {
 		btnContinue.setBounds(505, 331, 134, 31);
 		contentPanel.add(btnContinue);
 		
-		if (LoginScreen.loginManual) {
+		if (LoginScreen.loginManual) { // Wenn die Anleitung vom Login-Screen aus gestartet wurde wird ein anderer Button angezeigt, als wenn es mitten im Spiel geöffnet wurde
 			btnClose.setVisible(true);
 			btnContinue.setVisible(false);
 		} else {
@@ -150,7 +151,7 @@ public class ManualScreenDifficulties extends JDialog {
 		}
 		
 		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Leitet wieder zurück auf Seite eins der Bedienungsanleitung
 				ManualScreenBasics manualBS = new ManualScreenBasics();
 				manualBS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				manualBS.setVisible(true);
@@ -159,21 +160,21 @@ public class ManualScreenDifficulties extends JDialog {
 		});
 		
 		btnContinue.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Hebt die Pausierung des Spiels auf und es geht weiter
 				Gui.jf.setEnabled(true);
 				GameClock gc = new GameClock();
 				gc.start();
 				GameClock.running = true;
 				Snake.move();
 				Snake.waitToMove = false;
-				dispose();
+				dispose(); // Schliesst die Anleitung
 			}
 		});
 		
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginScreen.loginManual = false;
-				dispose();
+				dispose(); // Schliesst die Anleitung
 			}
 		});
 		
@@ -181,7 +182,7 @@ public class ManualScreenDifficulties extends JDialog {
 		this.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
 	    		if (LoginScreen.loginManual == false) {
-		    		Gui.jf.dispose();
+		    		Gui.jf.dispose();  // Schliesst das ganze Spiel falls es bereits offen ist
 	    		}
 				LoginScreen.loginManual = false;
 	        }

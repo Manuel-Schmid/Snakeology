@@ -1,27 +1,27 @@
+/**
+ * @author Manuel
+ */
+
 package gui;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import actions.KeyHandler;
-import clocks.GameClock;
 
-public class Gui {
-		
-	public Gui() {
+public class Gui { // Gui Klasse, die einen neuen JFrame erstellt und auf die Draw Klasse zugreift
+		 
+	public Gui() { // Schliesst allfällig übrig gebliebene JFrames bevor ein neuer erstellt wird
 		if (jf != null) {
 			jf.dispose();
 		}
 	}
 	
-	static JFrame jf;
-	Draw d;
+	static JFrame jf; // Neuer statischer JFrame
+	Draw d; // Neues Draw Objekt
 	
-	public static int width = 1000, height = 600;
-	public static int xoff = 230, yoff = 20;
+	public static int width = 1000, height = 600; // Grösse des Rahmens
+	public static int xoff = 230, yoff = 20; // Abstand zum Oberen und seitlichen Rand des Fensters
 	
-	public void create() {
+	public void create() { // Erstellt das Hauptfenster
 		jf = new JFrame("Snakeology"); // Titel
 		jf.setSize(width, height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

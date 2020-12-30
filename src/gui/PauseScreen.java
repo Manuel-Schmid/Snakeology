@@ -1,17 +1,18 @@
+/**
+ * @author Manuel
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import actions.Collision;
 import clocks.GameClock;
-import game.Bonus;
 import game.Snake;
 
 import java.awt.event.ActionListener;
@@ -20,18 +21,14 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Image;
 
 import javax.swing.SwingConstants;
-import javax.swing.JProgressBar;
 
-public class PauseScreen extends JDialog {
-
+public class PauseScreen extends JDialog { // Dieser JDialog mit der Pausierung des Spiels aufgerufen und kann das Spiel beenden, oder weiterfahren lassen
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 	
-	/**
-	 * Create the dialog.
-	 */
 	public PauseScreen() {
 		setTitle("Snakeology - paused");
 
@@ -65,28 +62,28 @@ public class PauseScreen extends JDialog {
 		buttonPane.add(btnQuit);
 		
 		btnResume.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Hebt die Pausierung des Spiels auf und es geht weiter
 				Gui.jf.setEnabled(true);
 				GameClock gc = new GameClock();
 				gc.start();
 				GameClock.running = true;
 				Snake.move();
 				Snake.waitToMove = false;
-				dispose();
+				dispose(); // Schliesst den Pause-Screen
 			}
 		});
 		
 		btnQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Gui.jf.dispose();
-				dispose();
+			public void actionPerformed(ActionEvent e) { // Beendet das Spiel
+				Gui.jf.dispose(); // Schliesst die Spieloberfläche
+				dispose(); // Schliesst den Pause-Screen
 			}
 		});
 		
 		// Close whole Game on Window Close
 		this.addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	    		Gui.jf.dispose();
+	    		Gui.jf.dispose(); // Schliesst die Spieloberfläche bei Klick auf X
 	        }
 	    });
 	}

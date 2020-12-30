@@ -1,14 +1,18 @@
+/**
+ * @author Manuel
+ */
+
 package game;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PickUp {
+public class PickUp { // Diese Klasse erstellt ein PickUp-Objekt (Apfel)
 	int x;
 	int y;
-	public static boolean isGolden = false;
+	public static boolean isGolden = false; // Es gibt selten auch goldene Äpfel
 	
 	public PickUp() {
-		isGolden = false;
+		isGolden = false; // Der erste Apfel kann nicht golden sein
 		this.setX(ThreadLocalRandom.current().nextInt(0,15)); // Random Koordinaten zwischen 0 und 15 für Äpfel
 		this.setY(ThreadLocalRandom.current().nextInt(0,15));
 		// Hier soll verhindert werden, dass ein Apfel in einem Tail spawnt
@@ -17,12 +21,6 @@ public class PickUp {
 				this.reset();
 			}
 		}
-		/*if(x == Snake.obstacle.getX() && y == Snake.obstacle.getY()) {
-			this.reset();
-		}
-		if(x == Snake.bonus.getX() && y == Snake.bonus.getY()) {
-			this.reset();
-		}*/
 	}
 	
 	public void reset() {
@@ -35,7 +33,7 @@ public class PickUp {
 		// Normal Pickup
 		this.setX(ThreadLocalRandom.current().nextInt(0,15));
 		this.setY(ThreadLocalRandom.current().nextInt(0,15));
-		// Hier soll verhindert werden, dass ein Apfel in einem Tail spawnt
+		// Hier soll verhindert werden, dass ein Apfel in einem Tail, obstacle oder bonus spawnt
 		for(int i = 0; i < Snake.tails.size(); i++) { // Iterieren durch Tails
 			if(x == Snake.tails.get(i).getX() && y == Snake.tails.get(i).getY()) {
 				this.reset();

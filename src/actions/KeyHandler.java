@@ -1,3 +1,7 @@
+/**
+ * @author Manuel
+ */
+
 package actions;
 
 import java.awt.event.KeyEvent;
@@ -9,19 +13,17 @@ import clocks.GameClock;
 import game.Dir;
 import game.Snake;
 import gui.ManualScreenBasics;
-import gui.ManualScreenDifficulties;
 import gui.PauseScreen;
 
-public class KeyHandler implements KeyListener{
+public class KeyHandler implements KeyListener{ // Diese Klasse soll das Handling der gedrückten Tasten während des Spiels verwalten.
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 	
 	@Override
-	public void keyPressed(KeyEvent e) { // Bewegungen der Schlange
-		switch (e.getKeyCode()) {
+	public void keyPressed(KeyEvent e) { // Bewegungen der Schlange in bestimmte Richtung
+		switch (e.getKeyCode()) { // KeyCode der gedrückten Taste wird verwendet
+		
 		// WASD-Tasten
 		case KeyEvent.VK_W: 
 			if(!(Snake.head.getDir() == Dir.DOWN) && !Snake.waitToMove) { // verhindert Probleme durch schnelles Tastenhämmern (hoch-runter)
@@ -47,6 +49,7 @@ public class KeyHandler implements KeyListener{
 				Snake.waitToMove = true;
 			}
 			break;
+		
 		// Pfeiltasten
 		case KeyEvent.VK_UP: 
 			if(!(Snake.head.getDir() == Dir.DOWN) && !Snake.waitToMove) { 
@@ -73,7 +76,7 @@ public class KeyHandler implements KeyListener{
 			}
 			break;
 		
-		// PauseScreen
+		// PauseScreen (wird durch "Escape" oder die Leertaste aufgelöst
 		case KeyEvent.VK_ESCAPE: 
 			if(GameClock.running == true) {
 				GameClock.running = false;
@@ -91,7 +94,7 @@ public class KeyHandler implements KeyListener{
 			}
 			break;
 			
-		// ManualScreen
+		// ManualScreen (wird durch die "m" Taste ausgelöst 
 		case KeyEvent.VK_M: 
 			if(GameClock.running == true) {
 				GameClock.running = false;
@@ -104,8 +107,6 @@ public class KeyHandler implements KeyListener{
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 	
 }

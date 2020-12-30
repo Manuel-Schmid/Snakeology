@@ -1,42 +1,42 @@
+/**
+ * @author Manuel
+ */
+
 package gui;
 
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
-import actions.Collision;
 import clocks.GameClock;
 import game.Bonus;
 import game.Obstacle;
 import game.PickUp;
 import game.Snake;
 
-public class Draw extends JLabel{
+public class Draw extends JLabel { // Hier wird die Spieloberfläche mit Grid und allen Extras erstellt und gezeichnet
+	private static final long serialVersionUID = 1L;
 	
 	Point p;
-	private String crntUser;
-	private String recUser;
-	private String recScore;
-	private String recDifficulty;
-	private String record;
-	public static JLabel lblHeart = new JLabel("");
-	public static JProgressBar b = new JProgressBar();
-	String splitter = ";";
+	private String crntUser; // Aktueller Benutzer
+	private String recUser; // Benutzername des Rekordhalters
+	private String recScore; // Punkestand des Rekordhalters
+	private String recDifficulty; // Schwierigkeitsgrad des Rekordhalters
+	private String record; // // String der in speziellem, mit Semikolon getrenntem Format die Rekorddaten abspeichert
+	public static JLabel lblHeart = new JLabel(""); // Label für das Herzbild (extraLife)
+	public static JProgressBar b = new JProgressBar(); // ProgressBar für die Anzeige wie lange der aktive Bonus noch anhält
+	String splitter = ";";  // Splitzeichen für den "record" String
 	
-	protected void paintComponent(Graphics g) {
+	@SuppressWarnings("resource")
+	protected void paintComponent(Graphics g) { // übergabe des "Graphics" Objekts
 		
 		// Current User
-		try {
+		try {  // liest den aktuellen Benutzer aus dem entsprechenden File aus
 			BufferedReader crntUserReader = new BufferedReader(new FileReader("currentUser.txt"));
 			crntUser = "";
 			String username = crntUserReader.readLine();
@@ -45,16 +45,14 @@ public class Draw extends JLabel{
 				username = crntUserReader.readLine();
 			} 	
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		// get Record
 		
-		try {
+		try { // liesst den aktuellen Rekord aus dem entsprechenden File aus
 			BufferedReader recReader = new BufferedReader(new FileReader("record.txt"));
 			record = "";
 			String rec = recReader.readLine();
@@ -70,14 +68,12 @@ public class Draw extends JLabel{
 			recScore = recordArr[1];
 			recDifficulty = recordArr[2];
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 				
-		super.paintComponent(g);
+		super.paintComponent(g); // Zugriff auf die paintComponent Funktion um das Interface zu zeichnen
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		
@@ -85,6 +81,7 @@ public class Draw extends JLabel{
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, Gui.width, Gui.height);
 		
+		// Draw Username
 		JLabel lblUser = new JLabel("User: " + crntUser);
 		lblUser.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblUser.setBounds(760, 35, 200, 35);
@@ -136,7 +133,7 @@ public class Draw extends JLabel{
 			 if (Bonus.bonus == "slowdown") {
 				 g.setColor(new Color(57, 196, 182));
 			 } else if (Bonus.bonus == "extraLife") {
-				 g.setColor(new Color(125, 123, 2));
+				 g.setColor(new Color(255, 153, 0));
 			 } else if (Bonus.bonus == "speedup") {
 				 g.setColor(new Color(0, 0, 204));
 			 } else if (Bonus.bonus == "double") {
@@ -163,14 +160,14 @@ public class Draw extends JLabel{
 		g.drawString("Score: " + Snake.score,  130, 37);
 		g.drawString("Your best: " + Snake.bestscore,  760,  37);
 				
-		// Record
+		// Draw Record
 		g.drawString("All-time record",  760,  165);
 		g.setFont(new Font("Arial", Font.BOLD, 17));
 		g.drawString("User: " + recUser,  760,  190);
 		g.drawString("Difficulty: " + recDifficulty,  760,  210);
 		g.drawString("Score: " + recScore,  760,  230);
 		
-		// Draw Boni ProgressBar
+		// Draw Bonus ProgressBar
 		b.setOrientation(SwingConstants.VERTICAL);
 		b.setMinimum(0);
 		b.setMaximum(100);
@@ -184,7 +181,7 @@ public class Draw extends JLabel{
 		g.drawString("(space) Pause Game",  38,  520);
 		
 		// Draw Boni Legend
-		if (GameClock.boniOn) {
+		if (GameClock.boniOn) { // Muss nur angezeigt werden, wenn die Boni aktiviert sind
 			g.drawString("Slowdown",  103,  359);
 			g.drawString("Speedup",  103,  389);
 			g.drawString("Double Points",  103,  419);
@@ -210,11 +207,11 @@ public class Draw extends JLabel{
 			
 			JLabel lblExtraLife = new JLabel("");
 			lblExtraLife.setBounds(70, 430, 25, 25);
-			lblExtraLife.setBackground(new Color(125, 123, 2));
+			lblExtraLife.setBackground(new Color(255, 153, 0));
 			lblExtraLife.setOpaque(true);
 			this.add(lblExtraLife);
 		}
-		repaint();		
+		repaint();
 	}
 	
 }

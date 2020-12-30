@@ -1,8 +1,9 @@
+/**
+ * @author Sven
+ */
+
 package game;
 
-
-// Keys setzen, die das Enum annehmen kann (Directions)
-
-public enum Dir {
+public enum Dir { // Keys setzen, die das Enum annehmen kann (Directions)
 	UP, LEFT, RIGHT, DOWN
 }

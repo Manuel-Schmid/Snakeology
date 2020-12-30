@@ -1,3 +1,7 @@
+/**
+ * @author Manuel
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -6,14 +10,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.regex.Pattern;
-
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -21,8 +21,6 @@ import javax.swing.border.EmptyBorder;
 
 import actions.Collision;
 import clocks.GameClock;
-import game.Obstacle;
-import game.PickUp;
 import game.Snake;
 
 import java.awt.event.ActionListener;
@@ -32,32 +30,25 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
-import javax.swing.JProgressBar;
-import javax.swing.border.MatteBorder;
 
-public class DeathScreen extends JDialog { // JDialog
-
-	private static final long serialVersionUID = -1567277742685379400L;
+public class DeathScreen extends JDialog { // Der Deathscreen ist ein JDialog der für die Abspeicherung der Rekorddaten und die Möglichkeit, das Spiel neuzustarten zuständig ist
+	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
 	
-	private String crntUser;
-	private String recScore;
-	private String record;
-	public boolean isNewRecord = false;
-	String splitter = ";";
+	private String crntUser; // Aktueller Benutzername
+	private String record; // String der in speziellem, mit Semikolon getrenntem Format die Rekorddaten abspeichert
+	public boolean isNewRecord = false; // Ist der Rekord in der aktuellen Runde gebrochen worden?
+	String splitter = ";"; // Splitzeichen für den "record" String
 		
-	/**
-	 * Create the dialog.
-	 * @throws IOException 
-	 */
+	@SuppressWarnings("resource")
 	public DeathScreen() throws IOException {
 		setTitle("Snakeology - You died");
 				
 		Gui.jf.setEnabled(false);
-				
+		
 		// get Current User
-		try {
+		try { // liest den aktuellen Benutzer aus dem entsprechenden File aus
 			BufferedReader crntUserReader = new BufferedReader(new FileReader("currentUser.txt"));
 			crntUser = "";
 			String username = crntUserReader.readLine();
@@ -67,15 +58,13 @@ public class DeathScreen extends JDialog { // JDialog
 			} 
 			
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		// New Record Handling
-		try {
+		try { // liesst den aktuellen Rekord aus dem entsprechenden File aus
 			BufferedReader recReader = new BufferedReader(new FileReader("record.txt"));
 			record = "";
 			String rec = recReader.readLine();
@@ -83,13 +72,13 @@ public class DeathScreen extends JDialog { // JDialog
 				record = rec;
 				rec = recReader.readLine();
 			}
-			if(record == "") {
+			if(record == "") { // Handling bei leerem Rekord File
 				record = " " + splitter + 0 + splitter + " ";
 			}
-			String[] recordArr = record.split(splitter);
-			int recordScore = Integer.parseInt(recordArr[1]);
+			String[] recordArr = record.split(splitter); // Rekord wird in leserliches Format gesplitet
+			int recordScore = Integer.parseInt(recordArr[1]); // Erreichte Punktzahl des Rekordes wird ausgelesen
 			
-			if (Snake.score > recordScore) {
+			if (Snake.score > recordScore) { // Wenn die aktuelle Punktzahl die Rekordpunkzahl übertrumpft wird ein neuer Rekord gebildet und abgespeichert
 				isNewRecord = true;
 				// Record Writer
 				String myScore = Integer.toString(Snake.score);
@@ -98,19 +87,16 @@ public class DeathScreen extends JDialog { // JDialog
 				try {
 					recordWriter.write("");
 					recordWriter.flush();
-					recordWriter.write(crntUser + splitter + myScore + splitter + GameClock.difficulty);
-					recordWriter.flush(); // daten übertragen
+					recordWriter.write(crntUser + splitter + myScore + splitter + GameClock.difficulty); // Neuer Rekord wird in speziellem Format abgespeichert
+					recordWriter.flush(); // Daten übertragen
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 				isNewRecord = true;
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -160,13 +146,13 @@ public class DeathScreen extends JDialog { // JDialog
 		checkBoniOn.setBounds(296, 147, 59, 23);
 		contentPanel.add(checkBoniOn);
 		
-		if (GameClock.boniOn) {
+		if (GameClock.boniOn) { // Schaut ob Boni in der Runde aktiviert waren und setzt das Häckchen entsprechend
 			checkBoniOn.setSelected(true);
 		} else { 
 			checkBoniOn.setSelected(false); 
 		}
 		
-		if (isNewRecord) {
+		if (isNewRecord) { // Meldung über neuen Rekord wird nur angezeigt, wenn ein neuer Rekord ausgelöst wurde
 			JLabel lblNewRecord = new JLabel("NEW RECORD !!!");
 			lblNewRecord.setFont(new Font("Tahoma", Font.BOLD, 16));
 			lblNewRecord.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,18 +175,18 @@ public class DeathScreen extends JDialog { // JDialog
 		btnQuit.setActionCommand("Cancel");
 		buttonPane.add(btnQuit);
 		
-		btnAgain.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnAgain.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { // Alles wird wieder zurückgesetzt und das Spiel wird mit dem gleichen Benutzer neugestartet
 				// Score zurücksetzen
 				Snake.score = 0;
 				Gui g = new Gui();
 				GameClock gc = new GameClock();
 				g.create();
-				gc.start(); // Methode aus Thread
+				gc.start(); // Methode aus Thread zum starten der Ticks
 				Snake.pickup.reset();
 				Snake.obstacle.reset();
 				GameClock.running = true;
-				if (checkBoniOn.isSelected()) {
+				if (checkBoniOn.isSelected()) { // Boni Handling
 					GameClock.boniOn = true;
 					Collision.activeBonus = "";
 					Snake.bonus.reset();
@@ -210,13 +196,13 @@ public class DeathScreen extends JDialog { // JDialog
 		});
 		
 		btnQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Beendet den DeathScreen und das Spiel
 				Gui.jf.dispose();
 				dispose();
 			}
 		});
 		
-		if (GameClock.difficulty == "easy") {
+		if (GameClock.difficulty == "easy") { // Toggle Buttons für Schwierigkeitsauswahl
 			btnEasy.setEnabled(false);
 			btnNormal.setEnabled(true);
 			btnHard.setEnabled(true);
@@ -231,7 +217,7 @@ public class DeathScreen extends JDialog { // JDialog
 		}
 		
 		btnEasy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Toggle Button "easy"
 				GameClock.difficulty = "easy";
 				btnEasy.setEnabled(false);
 				btnNormal.setEnabled(true);
@@ -240,7 +226,7 @@ public class DeathScreen extends JDialog { // JDialog
 		});
 		
 		btnNormal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // Toggle Button "normal"
 				GameClock.difficulty = "normal";
 				btnEasy.setEnabled(true);
 				btnNormal.setEnabled(false);
@@ -249,7 +235,7 @@ public class DeathScreen extends JDialog { // JDialog
 		});
 		
 		btnHard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) { // Toggle Button "hard"
 				GameClock.difficulty = "hard";
 				btnEasy.setEnabled(true);
 				btnNormal.setEnabled(true);
@@ -259,7 +245,7 @@ public class DeathScreen extends JDialog { // JDialog
 		
 		// Close whole Game on Window Close
 		this.addWindowListener(new WindowAdapter() {
-	        public void windowClosing(WindowEvent e) {
+	        public void windowClosing(WindowEvent e) { // Schliesst auch das Spielfeld wenn das X gedrückt wird
 	    		Gui.jf.dispose();
 	        }
 	    });
