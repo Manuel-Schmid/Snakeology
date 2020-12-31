@@ -5,7 +5,9 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -32,6 +34,7 @@ public class LoginScreen extends JDialog { // Dieser JDialog ermöglicht die Ausw
 		
 	@SuppressWarnings({ "resource", "unused" })
 	public LoginScreen() throws IOException {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Snakeology - Login");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -39,6 +42,8 @@ public class LoginScreen extends JDialog { // Dieser JDialog ermöglicht die Ausw
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+		Image imgSnake = new ImageIcon(this.getClass().getResource("/snake.png")).getImage();
+		setIconImage(imgSnake);
 		
 		tfUsername = new JTextField(); // In dieses Feld kann der Benutzername eingetragen werden
 		tfUsername.setBounds(108, 130, 151, 26);

@@ -7,11 +7,13 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ public class ManualScreenBasics extends JDialog { // Dieser JDialog ist die erst
 	private final JPanel contentPanel = new JPanel();
 
 	public ManualScreenBasics() {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		if (LoginScreen.loginManual == false) {
 			Gui.jf.setEnabled(false);
@@ -36,6 +39,8 @@ public class ManualScreenBasics extends JDialog { // Dieser JDialog ist die erst
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		Image imgSnake = new ImageIcon(this.getClass().getResource("/snake.png")).getImage();
+		setIconImage(imgSnake);
 		
 		JButton btnNext = new JButton("Next (1/2)");
 

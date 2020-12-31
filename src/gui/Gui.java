@@ -4,6 +4,9 @@
 
 package gui;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import actions.KeyHandler;
 
@@ -17,6 +20,7 @@ public class Gui { // Gui Klasse, die einen neuen JFrame erstellt und auf die Dr
 	
 	static JFrame jf; // Neuer statischer JFrame
 	Draw d; // Neues Draw Objekt
+	Image imgSnake = new ImageIcon(this.getClass().getResource("/snake.png")).getImage();
 	
 	public static int width = 1000, height = 600; // Grösse des Rahmens
 	public static int xoff = 230, yoff = 20; // Abstand zum Oberen und seitlichen Rand des Fensters
@@ -29,6 +33,7 @@ public class Gui { // Gui Klasse, die einen neuen JFrame erstellt und auf die Dr
 		jf.setLayout(null);
 		jf.setResizable(false);
 		jf.addKeyListener(new KeyHandler());
+		jf.setIconImage(imgSnake);
 		
 		d = new Draw();
 		d.setBounds(0, 0, width, height);

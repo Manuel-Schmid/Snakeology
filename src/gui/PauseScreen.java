@@ -7,6 +7,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.SwingConstants;
 
@@ -30,6 +32,7 @@ public class PauseScreen extends JDialog { // Dieser JDialog mit der Pausierung 
 	private final JPanel contentPanel = new JPanel();
 	
 	public PauseScreen() {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Snakeology - paused");
 
 		Gui.jf.setEnabled(false);
@@ -40,6 +43,8 @@ public class PauseScreen extends JDialog { // Dieser JDialog mit der Pausierung 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+		Image imgSnake = new ImageIcon(this.getClass().getResource("/snake.png")).getImage();
+		setIconImage(imgSnake);
 		
 		JLabel lblGamePaused = new JLabel("Game paused");
 		lblGamePaused.setHorizontalAlignment(SwingConstants.CENTER);

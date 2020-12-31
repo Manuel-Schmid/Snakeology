@@ -8,12 +8,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -43,6 +46,7 @@ public class DeathScreen extends JDialog { // Der Deathscreen ist ein JDialog de
 		
 	@SuppressWarnings("resource")
 	public DeathScreen() throws IOException {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Snakeology - You died");
 				
 		Gui.jf.setEnabled(false);
@@ -106,6 +110,8 @@ public class DeathScreen extends JDialog { // Der Deathscreen ist ein JDialog de
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+		Image imgSnake = new ImageIcon(this.getClass().getResource("/snake.png")).getImage();
+		setIconImage(imgSnake);
 		
 		JLabel lblNewLabel = new JLabel("YOU DIED");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 33));
