@@ -51,7 +51,7 @@ public class PauseScreen extends JDialog { // Dieser JDialog mit der Pausierung 
 		lblGamePaused.setBounds(96, 97, 241, 40);
 		lblGamePaused.setFont(new Font("Tahoma", Font.PLAIN, 33));
 		contentPanel.add(lblGamePaused);
-				
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -61,7 +61,7 @@ public class PauseScreen extends JDialog { // Dieser JDialog mit der Pausierung 
 		btnResume.setActionCommand("OK");
 		buttonPane.add(btnResume);
 		getRootPane().setDefaultButton(btnResume);
-	
+		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.setActionCommand("Cancel");
 		buttonPane.add(btnQuit);
